@@ -85,3 +85,35 @@ model Platform {
   @@index([status])
   @@index([sortOrder])
 }
+
+// Single editable row for every piece of site-wide homepage copy that
+// isn't tied to a specific platform — hero, the gallery section intro,
+// About, and Contact. A true singleton: always read/written by the fixed
+// id "singleton" (see prisma/seed.ts and the /admin/site route), rather
+// than a separate table-with-one-row convention or a settings key/value
+// table, since every field here is known upfront and unlikely to grow
+// unbounded the way platforms do.
+model SiteContent {
+  id               String   @id @default("singleton")
+  siteName         String   @default("Showcase")
+  siteTagline      String   @default("")
+  heroHeading      String   @db.Text
+  // Paragraphs separated by a blank line — split on "\n\n" when rendered,
+  // same convention as aboutBody below, so the admin form is just one
+  // textarea instead of a fixed, arbitrary number of paragraph fields.
+  heroIntro        String   @db.Text
+  heroPrimaryCta   String
+  heroSecondaryCta String
+  sectionHeading   String
+  sectionBody      String   @db.Text
+  aboutHeading     String
+  aboutBody        String   @db.Text
+  contactHeading   String
+  contactBody      String   @db.Text
+  contactCtaLabel  String
+  // Blank until set from /admin — never invented or defaulted to a real
+  // address by seed/migration code. The homepage's contact button renders
+  // as a disabled label until this is filled in.
+  contactEmail     String?
+  updatedAt        DateTime @updatedAt
+}

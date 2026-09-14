@@ -319,6 +319,38 @@ const platforms: PlatformSeed[] = [
   },
 ];
 
+// Seeded once as a starting point, then fully owned by whoever edits it
+// from /admin/site — unlike the platform rows above, this is NOT re-synced
+// on every deploy (update: {}), so an admin's homepage copy edits are
+// never silently overwritten by a future change to the defaults below.
+const siteContentDefaults = {
+  id: "singleton",
+  siteName: "Showcase",
+  siteTagline: "Operations and GTM software, built end to end, project by project.",
+  heroHeading: "Business experience. Built into working systems.",
+  heroIntro: [
+    "I'm Gennady Svetnikov — an operations and go-to-market professional who designs and builds software around real business problems.",
+    "My work spans sales intelligence, discovery preparation, recruiting operations, conference research, professional education, and commercial outreach. I build independently, using AI-assisted development to move from an operational requirement to a working tool, an interactive prototype, or a structured automation system.",
+    "The starting point is always the workflow: who needs to act, what information they need, and what should happen next.",
+  ].join("\n\n"),
+  heroPrimaryCta: "Explore the projects",
+  heroSecondaryCta: "Discuss a workflow",
+  sectionHeading: "Applications, prototypes, and operational systems",
+  sectionBody:
+    "Each project below explains the problem, the approach, and the delivered scope. Production tools, internal applications, prototypes, and planned capabilities are identified separately.",
+  aboutHeading: "About",
+  aboutBody: [
+    "My background combines BPO management, business development, financial services, and operational improvement. Building software extends that work: it allows me to turn requirements into tools that support how teams actually operate.",
+    "I take responsibility for the business problem, product definition, workflow design, and implementation. The portfolio includes independently built applications alongside prototypes and structured AI workflows.",
+    "I work in English and Russian, with an emphasis on clear communication, practical implementation, and accountable processes.",
+  ].join("\n\n"),
+  contactHeading: "What workflow needs to work better?",
+  contactBody:
+    "If your team is spending too much time researching, coordinating, preparing, or maintaining fragmented records, let's discuss the process and what a practical solution could look like.",
+  contactCtaLabel: "Discuss your workflow",
+  contactEmail: null,
+};
+
 async function main() {
   for (const { liveUrl, coverImageUrl, status, sortOrder, ...content } of platforms) {
     await prisma.platform.upsert({
@@ -328,6 +360,13 @@ async function main() {
     });
   }
   console.log(`Synced ${platforms.length} platforms (content re-synced every run; liveUrl/coverImageUrl/status/sortOrder are admin-managed and left alone once set).`);
+
+  await prisma.siteContent.upsert({
+    where: { id: "singleton" },
+    update: {},
+    create: siteContentDefaults,
+  });
+  console.log("Ensured the SiteContent singleton exists (left untouched if already present — edit it from /admin/site).");
 }
 
 main()

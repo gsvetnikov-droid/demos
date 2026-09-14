@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SITE_NAME, SITE_TAGLINE } from "@/lib/site";
+import { getSiteContent } from "@/lib/getSiteContent";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
-export const metadata: Metadata = {
-  title: SITE_NAME,
-  description: SITE_TAGLINE,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  return { title: content.siteName, description: content.siteTagline };
+}
 
 // Every page here reads live DB state — nothing should be statically
 // prerendered against build-time data.

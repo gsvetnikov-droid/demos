@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const rawCallbackUrl = searchParams.get("callbackUrl");
   const callbackUrl = rawCallbackUrl && rawCallbackUrl.startsWith("/") && !rawCallbackUrl.startsWith("//") ? rawCallbackUrl : "/admin";
@@ -25,8 +24,10 @@ export default function AdminLoginPage() {
       setError("Invalid username or password.");
       return;
     }
-    router.push(callbackUrl);
-    router.refresh();
+    // Full navigation, not router.push: middleware reads the session cookie
+    // on the very next request, and a client-side transition can race ahead
+    // of the browser applying the cookie the sign-in response just set.
+    window.location.href = callbackUrl;
   }
 
   return (

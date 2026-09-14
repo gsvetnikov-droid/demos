@@ -7,22 +7,25 @@ import SiteNav from "@/components/SiteNav";
 import LiveEmbed from "@/components/LiveEmbed";
 import InteractiveDemoModal from "@/components/InteractiveDemoModal";
 import { initialsFrom } from "@/lib/initials";
+import { getSiteContent } from "@/lib/getSiteContent";
 
 export default async function PlatformPage({ params }: { params: { slug: string } }) {
   const platform = await prisma.platform.findUnique({ where: { slug: params.slug } });
   if (!platform || platform.status !== "PUBLISHED") notFound();
 
-  const related =
+  const [related, content] = await Promise.all([
     platform.relatedProjectSlugs.length > 0
-      ? await prisma.platform.findMany({
+      ? prisma.platform.findMany({
           where: { slug: { in: platform.relatedProjectSlugs }, status: "PUBLISHED" },
           select: { slug: true, name: true, tagline: true },
         })
-      : [];
+      : Promise.resolve([]),
+    getSiteContent(),
+  ]);
 
   return (
     <div className="bg-cream-50">
-      <SiteNav />
+      <SiteNav siteName={content.siteName} />
 
       <header className="border-b border-cream-200">
         <div className="mx-auto max-w-3xl px-6 py-16">
