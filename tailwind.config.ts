@@ -33,7 +33,7 @@ const config: Config = {
       },
       boxShadow: {
         card: "0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06)",
-        glow: "0 0 0 1px rgb(255 255 255 / 0.06), 0 8px 30px -8px rgb(99 102 241 / 0.35)",
+        glow: "0 0 0 1px rgb(255 255 255 / 0.08), 0 8px 30px -8px rgb(34 211 238 / 0.25)",
       },
       keyframes: {
         "fade-in-up": {

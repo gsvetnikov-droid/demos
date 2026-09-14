@@ -31,7 +31,6 @@ async function seedCrmPlatform() {
       // repo's DEMO.md) is live — left blank for now on purpose.
       liveUrl: "",
       repoUrl: "",
-      iconEmoji: "🏦",
       coverImageUrl: "",
       whitepaper,
       status: "DRAFT",

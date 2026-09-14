@@ -46,6 +46,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ("repoUrl" in body) data.repoUrl = body.repoUrl || null;
   if ("iconEmoji" in body) data.iconEmoji = body.iconEmoji || null;
   if ("coverImageUrl" in body) data.coverImageUrl = body.coverImageUrl || null;
+  if ("embeddable" in body) data.embeddable = body.embeddable !== false;
   if ("whitepaper" in body) data.whitepaper = body.whitepaper || "";
   if (body.status === "PUBLISHED" || body.status === "DRAFT") data.status = body.status;
   if (typeof body.sortOrder === "number") data.sortOrder = body.sortOrder;

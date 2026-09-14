@@ -45,6 +45,7 @@ export async function POST(req: Request) {
       repoUrl: body.repoUrl || null,
       iconEmoji: body.iconEmoji || null,
       coverImageUrl: body.coverImageUrl || null,
+      embeddable: body.embeddable !== false,
       whitepaper: body.whitepaper || "",
       status: body.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT",
       sortOrder: (maxSortOrder._max.sortOrder ?? 0) + 1,

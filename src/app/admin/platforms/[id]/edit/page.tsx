@@ -22,8 +22,8 @@ export default async function EditPlatformPage({ params }: { params: { id: strin
           highlights: platform.highlights.join("\n"),
           liveUrl: platform.liveUrl || "",
           repoUrl: platform.repoUrl || "",
-          iconEmoji: platform.iconEmoji || "",
           coverImageUrl: platform.coverImageUrl || "",
+          embeddable: platform.embeddable,
           whitepaper: platform.whitepaper,
           status: platform.status as "DRAFT" | "PUBLISHED",
         }}

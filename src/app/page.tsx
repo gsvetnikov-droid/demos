@@ -17,7 +17,7 @@ export default async function HomePage() {
       <section className="relative isolate overflow-hidden">
         <GradientMesh />
         <div className="mx-auto max-w-4xl px-6 py-28 text-center sm:py-36">
-          <p className="animate-fade-in-up text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400">
+          <p className="animate-fade-in-up text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/90">
             Selected work
           </p>
           <h1 className="animate-fade-in-up mt-5 text-balance text-5xl font-bold tracking-tight text-white [animation-delay:0.1s] sm:text-6xl">
@@ -42,7 +42,7 @@ export default async function HomePage() {
         {platforms.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-white/10 p-14 text-center text-slate-500">
             Nothing published yet — add a platform from{" "}
-            <a href="/admin" className="text-indigo-400 underline underline-offset-4">
+            <a href="/admin" className="text-cyan-300 underline underline-offset-4">
               /admin
             </a>
             .

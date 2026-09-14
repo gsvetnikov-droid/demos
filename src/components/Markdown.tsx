@@ -6,7 +6,7 @@ export default function Markdown({ content, dark = false }: { content: string; d
     <div
       className={
         dark
-          ? "prose prose-invert max-w-none prose-headings:font-bold prose-a:text-indigo-400 prose-strong:text-white prose-code:text-indigo-300 prose-blockquote:border-indigo-400/40 prose-hr:border-white/10"
+          ? "prose prose-invert max-w-none prose-headings:font-bold prose-a:text-cyan-300 prose-strong:text-white prose-code:text-cyan-200 prose-blockquote:border-cyan-300/40 prose-hr:border-white/10"
           : "prose prose-slate max-w-none prose-headings:font-bold prose-a:text-brand-600"
       }
     >

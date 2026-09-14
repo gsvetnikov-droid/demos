@@ -33,12 +33,18 @@ model Platform {
   highlights    String[] @default([])
   liveUrl       String?
   repoUrl       String?
-  // Emoji shown on the gallery card / whitepaper header when there's no
-  // real screenshot yet — cheap placeholder branding, same idea as an
-  // Artifact's favicon. coverImageUrl overrides it once a real image
-  // exists somewhere reachable (S3, Vercel Blob, etc. — not stored here).
+  // Emoji fallback, kept for old rows / optional future use — the public
+  // pages no longer render this (they show a generated initials badge
+  // instead; see PlatformCard.tsx). coverImageUrl overrides the badge
+  // once a real image exists somewhere reachable (S3, Vercel Blob, etc.
+  // — not stored here).
   iconEmoji     String?
   coverImageUrl String?
+  // Whether the whitepaper page embeds `liveUrl` in a live iframe preview.
+  // Defaults on; flip off per-platform from /admin if a site's own
+  // X-Frame-Options/CSP refuses to be framed (the "Launch demo" button
+  // still works regardless — this only controls the in-page preview).
+  embeddable    Boolean  @default(true)
   whitepaper    String   @db.Text
   // DRAFT | PUBLISHED — only PUBLISHED rows show on the public site;
   // DRAFT lets a platform be prepared in the admin before it's ready to

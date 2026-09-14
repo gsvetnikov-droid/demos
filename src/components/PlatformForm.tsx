@@ -16,8 +16,8 @@ export type PlatformFormData = {
   highlights: string; // one per line
   liveUrl: string;
   repoUrl: string;
-  iconEmoji: string;
   coverImageUrl: string;
+  embeddable: boolean;
   whitepaper: string;
   status: "DRAFT" | "PUBLISHED";
 };
@@ -33,8 +33,8 @@ const EMPTY: PlatformFormData = {
   highlights: "",
   liveUrl: "",
   repoUrl: "",
-  iconEmoji: "",
   coverImageUrl: "",
+  embeddable: true,
   whitepaper: "",
   status: "DRAFT",
 };
@@ -73,8 +73,8 @@ export default function PlatformForm({ initial }: { initial?: Partial<PlatformFo
       highlights: linesToArray(form.highlights),
       liveUrl: form.liveUrl,
       repoUrl: form.repoUrl,
-      iconEmoji: form.iconEmoji,
       coverImageUrl: form.coverImageUrl,
+      embeddable: form.embeddable,
       whitepaper: form.whitepaper,
       status: form.status,
     };
@@ -112,18 +112,20 @@ export default function PlatformForm({ initial }: { initial?: Partial<PlatformFo
         <Field label="Category">
           <input value={form.category} onChange={(e) => set("category", e.target.value)} className={inputClass} placeholder="e.g. CRM, Analytics" />
         </Field>
-        <Field label="Icon emoji" hint="Shown when there's no cover image.">
-          <input value={form.iconEmoji} onChange={(e) => set("iconEmoji", e.target.value)} className={inputClass} placeholder="🧩" />
-        </Field>
-        <Field label="Cover image URL">
+        <Field label="Cover image URL" hint="Leave blank to show a generated initials badge instead.">
           <input value={form.coverImageUrl} onChange={(e) => set("coverImageUrl", e.target.value)} className={inputClass} />
         </Field>
-        <Field label="Live URL">
+        <Field label="Live URL" hint="Powers both the 'Launch demo' button and the embedded preview below.">
           <input value={form.liveUrl} onChange={(e) => set("liveUrl", e.target.value)} className={inputClass} />
         </Field>
         <Field label="Repo URL">
           <input value={form.repoUrl} onChange={(e) => set("repoUrl", e.target.value)} className={inputClass} />
         </Field>
+        <label className="flex items-center gap-2 pt-6 text-sm text-slate-700">
+          <input type="checkbox" checked={form.embeddable} onChange={(e) => set("embeddable", e.target.checked)} className="h-4 w-4 rounded border-slate-300" />
+          Allow embedded live preview
+          <span className="text-xs text-slate-400">(turn off if the site refuses to be framed)</span>
+        </label>
         <Field label="Status">
           <select value={form.status} onChange={(e) => set("status", e.target.value as "DRAFT" | "PUBLISHED")} className={inputClass}>
             <option value="DRAFT">Draft</option>
