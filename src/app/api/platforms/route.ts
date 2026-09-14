@@ -45,8 +45,14 @@ export async function POST(req: Request) {
       repoUrl: body.repoUrl || null,
       iconEmoji: body.iconEmoji || null,
       coverImageUrl: body.coverImageUrl || null,
+      imageAlt: body.imageAlt || null,
+      imageCaption: body.imageCaption || null,
       embeddable: body.embeddable !== false,
       whitepaper: body.whitepaper || "",
+      displayStatus: body.displayStatus || null,
+      relatedProjectSlugs: Array.isArray(body.relatedProjectSlugs)
+        ? body.relatedProjectSlugs.filter((t: unknown) => typeof t === "string" && t.trim())
+        : [],
       status: body.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT",
       sortOrder: (maxSortOrder._max.sortOrder ?? 0) + 1,
     },

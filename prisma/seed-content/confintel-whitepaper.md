@@ -1,28 +1,42 @@
-## The problem
+## Executive overview
 
-Deciding whether a conference or trade show is worth the travel budget usually means digging through the event's own site, checking a few review threads, and guessing at ROI with no real numbers behind it — repeated from scratch for every event under consideration, with no consistent way to compare one against another.
+ConfIntel supports professionals deciding which conferences, trade shows, and expos deserve their time and budget.
 
-## What it is
+Instead of treating event discovery as a list of dates and venues, the platform brings research and planning into the same workflow. Users can examine an event's relevance, consider potential benefits and risks, prepare a budget, and organize their networking approach.
 
-A free, fully public conference and trade show research platform — no signup, no login, instant access — covering 16+ industries, 100+ sub-domains, and 1,000+ tracked events. From a single search, it generates:
+The export describes public access without registration and coverage across multiple industries and event categories. Historical catalog counts should be treated as a snapshot rather than a continuously verified total.
 
-- **ROI calculator** — an estimate of return before a dollar is committed.
-- **SWOT analysis** — strengths, risks, and opportunities mapped for the specific event.
-- **AI assistant** — personalized event recommendations based on what's being researched.
-- **Budget planner** — a full cost breakdown with PDF export.
-- **Networking prep** — AI-generated conversation starters and icebreakers for the event's actual audience.
-- **CFP tracker** — call-for-papers deadlines tracked so a speaking opportunity doesn't pass unnoticed.
+## Operational problem
 
-## Architecture
+Event selection involves more than finding something relevant. Teams need to assess fit, estimate costs, consider commercial objectives, and prepare for the conversations that justify attendance.
 
-Built and deployed solo, with no engineering team behind it, running at zero ongoing subscription cost. It exists as the primary proof-of-methodology behind AI Edge Academy: the live demonstration that an operational AI system covering real research, calculation, and generation tasks can be built and run by one person without a development team, cited across AI Edge Academy's own course content and outbound materials as the working example rather than a claim.
+When those tasks are spread across search results, spreadsheets, and individual notes, comparison becomes inconsistent and preparation is easy to postpone.
 
-## A few decisions worth calling out
+## Delivered solution
 
-**No signup, by design.** A research tool that gates its output behind an account creates friction at exactly the moment someone is deciding whether the tool is even useful. Removing that step trades a lead-capture opportunity for an instant first impression, which is the more valuable trade for a proof-of-methodology asset that needs to be tried, not just described.
+ConfIntel combines event research with six documented planning capabilities:
 
-**Breadth over a single vertical.** Covering 16+ industries and 100+ sub-domains instead of, say, only tech conferences means the tool has to generalize its scoring and recommendation logic rather than hand-tune it per industry — a harder build, but the one that makes the platform a genuine research tool instead of a niche calculator.
+- ROI scenario calculation.
+- SWOT analysis.
+- AI-assisted event recommendations.
+- Budget planning with PDF export.
+- Networking preparation.
+- Call-for-proposals deadline tracking.
 
-## Result
+Together, these functions support a progression from initial discovery to a more structured attendance plan.
 
-A live, publicly accessible research platform tracking over 1,000 events across 16+ industries, run at zero infrastructure cost and standing as the working proof that a solo operator can ship real operational AI software.
+## Decision-support approach
+
+The platform is best positioned as a research and planning assistant. Its outputs help users ask better questions and compare options; they do not establish that an event will generate a particular financial return.
+
+ROI outputs depend on user assumptions. AI-generated recommendations and SWOT findings require review against current organizer information and the user's objectives.
+
+## Architecture and boundaries
+
+The supplied export does not confirm the frontend, model provider, database, or hosting stack. These details remain unpublished until checked in the repository or confirmed separately.
+
+Event dates, submission deadlines, availability, and costs should be checked with organizers before commitments are made.
+
+## What this demonstrates
+
+An independently built decision-support product organized around a complete business workflow, from research to preparation.

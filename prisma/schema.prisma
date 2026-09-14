@@ -40,16 +40,36 @@ model Platform {
   // — not stored here).
   iconEmoji     String?
   coverImageUrl String?
+  // Accessible alt text for coverImageUrl — kept separate from imageCaption
+  // because they serve different readers: alt text describes the image for
+  // someone who can't see it, the caption is visible copy for everyone,
+  // explaining what the image actually is (e.g. "Representative interface
+  // with fictional prospects") so a generated mockup is never mistaken for
+  // a real screenshot.
+  imageAlt      String?
+  imageCaption  String?
   // Whether the whitepaper page embeds `liveUrl` in a live iframe preview.
   // Defaults on; flip off per-platform from /admin if a site's own
   // X-Frame-Options/CSP refuses to be framed (the "Launch demo" button
   // still works regardless — this only controls the in-page preview).
   embeddable    Boolean  @default(true)
   whitepaper    String   @db.Text
+  // Content-facing maturity label shown to visitors — "Internal tool",
+  // "Prototype", "Public platform", "GTM system", "AI workflow", etc.
+  // Deliberately a separate field from `status` below: this is what a
+  // project *is*, that field is whether the row is visible at all. Mixing
+  // the two would mean a project's visibility state and its actual nature
+  // fight over the same word.
+  displayStatus String?
   // DRAFT | PUBLISHED — only PUBLISHED rows show on the public site;
   // DRAFT lets a platform be prepared in the admin before it's ready to
   // show anyone.
   status        String   @default("DRAFT")
+  // Slugs of other Platform rows this one is related to (e.g. two builds
+  // documented as related/lineage rather than fully independent) — shown
+  // as cross-links on the detail page so the relationship is explicit
+  // instead of implied by two similar-sounding names.
+  relatedProjectSlugs String[] @default([])
   // Manual display order on the gallery (lower first) — set from the
   // admin list via up/down controls, not auto-computed.
   sortOrder     Int      @default(0)

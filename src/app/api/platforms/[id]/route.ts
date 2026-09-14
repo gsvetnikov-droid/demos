@@ -46,8 +46,15 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ("repoUrl" in body) data.repoUrl = body.repoUrl || null;
   if ("iconEmoji" in body) data.iconEmoji = body.iconEmoji || null;
   if ("coverImageUrl" in body) data.coverImageUrl = body.coverImageUrl || null;
+  if ("imageAlt" in body) data.imageAlt = body.imageAlt || null;
+  if ("imageCaption" in body) data.imageCaption = body.imageCaption || null;
   if ("embeddable" in body) data.embeddable = body.embeddable !== false;
   if ("whitepaper" in body) data.whitepaper = body.whitepaper || "";
+  if ("displayStatus" in body) data.displayStatus = body.displayStatus || null;
+  if ("relatedProjectSlugs" in body)
+    data.relatedProjectSlugs = Array.isArray(body.relatedProjectSlugs)
+      ? body.relatedProjectSlugs.filter((t: unknown) => typeof t === "string" && t.trim())
+      : [];
   if (body.status === "PUBLISHED" || body.status === "DRAFT") data.status = body.status;
   if (typeof body.sortOrder === "number") data.sortOrder = body.sortOrder;
 

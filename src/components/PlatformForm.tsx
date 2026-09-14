@@ -17,8 +17,12 @@ export type PlatformFormData = {
   liveUrl: string;
   repoUrl: string;
   coverImageUrl: string;
+  imageAlt: string;
+  imageCaption: string;
   embeddable: boolean;
   whitepaper: string;
+  displayStatus: string;
+  relatedProjectSlugs: string; // comma-separated in the form, array in the API
   status: "DRAFT" | "PUBLISHED";
 };
 
@@ -34,8 +38,12 @@ const EMPTY: PlatformFormData = {
   liveUrl: "",
   repoUrl: "",
   coverImageUrl: "",
+  imageAlt: "",
+  imageCaption: "",
   embeddable: true,
   whitepaper: "",
+  displayStatus: "",
+  relatedProjectSlugs: "",
   status: "DRAFT",
 };
 
@@ -74,8 +82,12 @@ export default function PlatformForm({ initial }: { initial?: Partial<PlatformFo
       liveUrl: form.liveUrl,
       repoUrl: form.repoUrl,
       coverImageUrl: form.coverImageUrl,
+      imageAlt: form.imageAlt,
+      imageCaption: form.imageCaption,
       embeddable: form.embeddable,
       whitepaper: form.whitepaper,
+      displayStatus: form.displayStatus,
+      relatedProjectSlugs: csvToArray(form.relatedProjectSlugs),
       status: form.status,
     };
 
@@ -115,11 +127,23 @@ export default function PlatformForm({ initial }: { initial?: Partial<PlatformFo
         <Field label="Cover image URL" hint="Leave blank to show a generated initials badge instead.">
           <input value={form.coverImageUrl} onChange={(e) => set("coverImageUrl", e.target.value)} className={inputClass} />
         </Field>
-        <Field label="Live URL" hint="Powers both the 'Launch demo' button and the embedded preview below.">
+        <Field label="Image alt text" hint="Accessible description of the image, for screen readers.">
+          <input value={form.imageAlt} onChange={(e) => set("imageAlt", e.target.value)} className={inputClass} />
+        </Field>
+        <Field label="Image caption" hint="Visible caption under the image, e.g. 'Representative interface with sample data.' Never claim a generated mockup is a real screenshot.">
+          <input value={form.imageCaption} onChange={(e) => set("imageCaption", e.target.value)} className={inputClass} />
+        </Field>
+        <Field label="Live URL" hint="Only set this once you've verified the destination is actually reachable — it powers both the 'Launch demo' button and the embedded preview below.">
           <input value={form.liveUrl} onChange={(e) => set("liveUrl", e.target.value)} className={inputClass} />
         </Field>
         <Field label="Repo URL">
           <input value={form.repoUrl} onChange={(e) => set("repoUrl", e.target.value)} className={inputClass} />
+        </Field>
+        <Field label="Display status" hint="Content-facing maturity label, e.g. 'Internal tool', 'Prototype', 'Public platform', 'GTM system', 'AI workflow'. Separate from Status below, which only controls visibility.">
+          <input value={form.displayStatus} onChange={(e) => set("displayStatus", e.target.value)} className={inputClass} placeholder="e.g. Internal tool" />
+        </Field>
+        <Field label="Related project slugs" hint="Comma-separated slugs of other platforms this one is related to (e.g. two builds documented as lineage rather than fully independent).">
+          <input value={form.relatedProjectSlugs} onChange={(e) => set("relatedProjectSlugs", e.target.value)} className={inputClass} placeholder="e.g. emsit-hiring-signals" />
         </Field>
         <label className="flex items-center gap-2 pt-6 text-sm text-slate-700">
           <input type="checkbox" checked={form.embeddable} onChange={(e) => set("embeddable", e.target.checked)} className="h-4 w-4 rounded border-slate-300" />

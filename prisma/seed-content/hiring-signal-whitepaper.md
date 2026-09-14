@@ -1,27 +1,39 @@
-## The problem
+## Executive overview
 
-Finding outsourcing prospects the manual way means scanning job boards by eye, guessing whether a hiring pattern actually signals outsourcing intent, and logging whatever gets remembered into a spreadsheet. There's no scoring, no pipeline, and no way to tell at a glance which of fifty flagged companies this week are actually worth a call — by the time a rep works through the list, the hiring signal that made a company worth calling is already a week old.
+Hiring Signal Intelligence was built to help a BPO business identify companies whose hiring activity may indicate a growing operational need.
 
-## What it is
+The platform examines company-level patterns rather than evaluating job applicants. Support-role expansion, extended coverage requirements, specialized roles, and repeated hiring activity can provide useful context for an outsourcing conversation.
 
-A lead-sourcing platform that turns live hiring activity into a scored, prioritized outreach list, run as one loop: **find** the hiring signals that matter, **understand** why a company is a fit and why now, **contact** the right person with the right angle, **engage** with a message that lands, **close** the conversation into a partnership.
+The product connects those signals to prioritization and follow-up. Its objective is not simply to collect job postings, but to help the user decide which companies merit further investigation and why.
 
-The intelligence layer scores every company it tracks across six dimensions: hiring volume and velocity, role mix and seniority depth, work model and coverage needs, bilingual and specialized role demand, repost and growth patterns, and overall fit for outsourced support. Each company comes out the other side with an opportunity score from 0–100, a priority tier (High / Good Fit / Review), a recommended next step, a plain-language "why now" rationale, and its open role count and locations.
+## Operational problem
 
-The dashboard runs as a live sourcing queue rather than a static report: companies tracked, new companies found this week, follow-ups due, and a ranked top-20 list of the best opportunities currently open, so a rep opens the tool already knowing where to start the day.
+Manual prospecting requires repeated searches, interpretation of job listings, and movement between research notes and a sales pipeline. A large list of hiring companies provides limited value without a clear explanation of relevance.
 
-## Architecture
+The platform addresses this by combining evidence, an opportunity score, and an actionable next step.
 
-**Stack:** Next.js on Neon Postgres, deployed to Vercel. Job data comes in from a set of free public APIs — Remotive, Arbeitnow, RemoteOK, and Jobicy — supplemented by direct reads against Greenhouse, Lever, and Ashby, the three ATS platforms that make up most of the postings actually worth scoring. A signal-aware outreach generator sits on top of the scoring layer, and a full sales pipeline tracker carries a scored company from first flag through to a closed conversation.
+## Delivered solution
 
-## A few decisions worth calling out
+The documented intelligence layer considers hiring volume, velocity, role mix, seniority, work model, coverage needs, specialized roles, and repost patterns.
 
-**Free data sources instead of a paid job-data API.** Remotive, Arbeitnow, RemoteOK, and Jobicy each expose enough listing data on their own free tiers to build a usable signal feed, and reading ATS platforms directly covers the postings those aggregators miss. Together they replace what would otherwise be a recurring data-vendor bill.
+Company records include a 0–100 opportunity score, priority level, rationale, open-role information, and a recommended next action.
 
-**Scoring six dimensions instead of one.** A single "is this company hiring a lot" signal produces false positives constantly — ordinary headcount growth looks identical to outsourcing intent on that axis alone. Scoring role mix, seniority depth, work model, and repost patterns alongside raw volume is what turns a noisy hiring feed into a short list actually worth calling.
+A signal-aware outreach generator supports message preparation, while a pipeline tracker keeps research connected to commercial activity.
 
-**A ranked top-20, not a raw feed.** Two hundred and forty-eight tracked companies is not a list anyone works from directly. Surfacing five high-priority, ready-to-contact opportunities alongside the full count is what makes the tool usable in the first five minutes of a day, not just accurate in aggregate.
+## Architecture and workflow
 
-## Result
+The documented stack uses Next.js, Neon Postgres, and Vercel. Job sources include Remotive, Arbeitnow, RemoteOK, Jobicy, and ATS boards such as Greenhouse, Lever, and Ashby.
 
-A live sourcing tool that replaces a manual job-board scan with a scored, ranked, pipeline-ready prospect list — turning hiring activity into prioritized outreach before the company knows it needs the call.
+The operating sequence is straightforward: discover a signal, examine the evidence, review fit, prepare outreach, and track the resulting conversation.
+
+## Interpretation and boundaries
+
+An opportunity score is a prioritization aid — not a probability of purchase or proof that a company intends to outsource.
+
+Hiring signals can be stale, duplicated, or misleading without business context. Human review remains important before outreach.
+
+This platform and the [EMSIT Hiring Signal Tool](/platforms/emsit-hiring-signals) are related builds — the exports describe a shared lineage, not confirmation that every capability here represents a fully separate, independent implementation.
+
+## What this demonstrates
+
+Translating domain knowledge into company-level scoring, explainable prioritization, and a usable sales workflow.

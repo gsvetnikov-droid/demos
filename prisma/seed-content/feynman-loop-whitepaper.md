@@ -1,27 +1,44 @@
-## The problem
+## Executive overview
 
-Most AI explanations optimize for sounding complete on the first pass: a single well-organized answer that reads well but leaves whoever asked no clearer on where their own understanding actually breaks down. Learning a genuinely hard topic requires finding the specific place someone's mental model is wrong and repairing it directly, not restating the subject from the top.
+Feynman Learning Loop is a custom AI teaching workflow, not a standalone software application.
 
-## What it is
+The project uses standing instructions to guide learning sessions through a repeatable process. Instead of stopping at an explanation, it asks the learner to examine confusion, respond to questions, apply the idea, and produce a concise teaching summary.
 
-A standing Claude project: a prompt architecture built around Richard Feynman's approach to learning — simplify, identify gaps, question assumptions, refine, apply, compress. Every session runs the same structured loop instead of a single freeform explanation:
+The objective is to make understanding visible through the learner's own reasoning.
 
-1. Ask for the topic and current understanding level
-2. Give a simple explanation with one clean analogy
-3. Highlight common points of confusion
-4. Ask 3–5 targeted questions designed to surface actual gaps, not test recall
-5. Refine the explanation across 2–3 cycles, each one required to be clearer than the one before it
-6. Test understanding by having the person apply the concept or teach it back
-7. Compress the whole thing into a final teaching snapshot — the version they'd actually use to explain it to someone else
+## Learning problem
 
-Standing constraints keep every session honest to the method: an analogy in every explanation, no jargon before it's defined in plain language, and a fixed rule that each refinement cycle has to be clearer than the last.
+A clear explanation can feel like understanding even when the learner cannot use the idea independently.
 
-## A few decisions worth calling out
+Passive reading also makes it difficult to identify which assumptions or missing concepts are causing confusion.
 
-**Understanding over recall, enforced structurally.** The targeted-questions step exists to find what's still shaky, not to confirm what's already understood. A loop that only ever validated existing knowledge wouldn't do anything a plain Q&A session couldn't already do.
+The workflow addresses this by treating questions, application, and teach-back as part of the session rather than optional follow-up activities.
 
-**A known conflict with a broader writing standard, left unresolved on purpose.** This project's constraints require an analogy in every explanation. A separate, global writing standard for the same user bans analogies by default across most other content. The two rules disagree, and rather than quietly picking one to win everywhere, the project's own instructions take precedence only inside this specific context — nowhere else.
+## Delivered method
 
-## Result
+The operating loop is:
 
-A repeatable teaching method turned into a fixed set of operating instructions, so a complex topic — technical, financial, legal, or operational — gets the same structured breakdown every time, instead of depending on how the question happened to be phrased.
+1. Simplify the concept.
+2. Identify gaps.
+3. Question assumptions.
+4. Refine the explanation.
+5. Apply the concept.
+6. Compress the result into a teachable insight.
+
+Sessions begin with the topic and current understanding level. The assistant then supplies an accessible explanation, checks confusion, conducts refinement cycles, and asks for application or teaching back.
+
+## Implementation
+
+The deliverable is a set of persistent project instructions defining the assistant's role, session sequence, constraints, and output format.
+
+The instructions call for analogies, simple definitions, and progressively clearer explanations. These rules apply within the learning project rather than redefining the user's general writing preferences.
+
+## Boundaries
+
+A completed session is not proof of durable learning, and the export contains no controlled outcome evaluation.
+
+The workflow also does not make AI explanations authoritative — where factual accuracy matters, explanations still require appropriate source checking.
+
+## What this demonstrates
+
+Designing a repeatable human–AI interaction around a specific outcome rather than relying on an isolated prompt.

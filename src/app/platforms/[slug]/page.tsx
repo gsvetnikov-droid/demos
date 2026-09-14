@@ -11,6 +11,14 @@ export default async function PlatformPage({ params }: { params: { slug: string 
   const platform = await prisma.platform.findUnique({ where: { slug: params.slug } });
   if (!platform || platform.status !== "PUBLISHED") notFound();
 
+  const related =
+    platform.relatedProjectSlugs.length > 0
+      ? await prisma.platform.findMany({
+          where: { slug: { in: platform.relatedProjectSlugs }, status: "PUBLISHED" },
+          select: { slug: true, name: true, tagline: true },
+        })
+      : [];
+
   return (
     <div className="bg-cream-50">
       <SiteNav />
@@ -25,10 +33,10 @@ export default async function PlatformPage({ params }: { params: { slug: string 
             {platform.coverImageUrl ? (
               <Image
                 src={platform.coverImageUrl}
-                alt={platform.name}
+                alt={platform.imageAlt || platform.name}
                 width={72}
                 height={72}
-                className="h-[72px] w-[72px] rounded-2xl border border-cream-200 object-cover"
+                className="h-[72px] w-[72px] rounded-2xl border border-cream-200 bg-white object-contain p-1.5"
               />
             ) : (
               <span className="flex h-[72px] w-[72px] items-center justify-center rounded-2xl bg-neutral-900 text-2xl font-bold tracking-wide text-white">
@@ -45,6 +53,11 @@ export default async function PlatformPage({ params }: { params: { slug: string 
             {platform.category && (
               <span className="rounded-full bg-cream-200 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-cream-800">
                 {platform.category}
+              </span>
+            )}
+            {platform.displayStatus && (
+              <span className="rounded-full border border-neutral-300 px-2.5 py-0.5 text-xs font-medium text-neutral-600">
+                {platform.displayStatus}
               </span>
             )}
             {platform.techStack.map((tech) => (
@@ -99,8 +112,43 @@ export default async function PlatformPage({ params }: { params: { slug: string 
         </div>
       )}
 
+      {platform.coverImageUrl && (
+        <div className="mx-auto max-w-3xl px-6 pt-16">
+          <figure className="overflow-hidden rounded-2xl border border-cream-200 bg-white">
+            <Image
+              src={platform.coverImageUrl}
+              alt={platform.imageAlt || platform.name}
+              width={1600}
+              height={1000}
+              className="h-auto w-full object-contain"
+            />
+            {platform.imageCaption && (
+              <figcaption className="border-t border-cream-200 bg-cream-50 px-4 py-2.5 text-center text-xs italic text-neutral-500">
+                {platform.imageCaption}
+              </figcaption>
+            )}
+          </figure>
+        </div>
+      )}
+
       <div className="mx-auto max-w-3xl px-6 py-16">
         <Markdown content={platform.whitepaper} />
+
+        {related.length > 0 && (
+          <div className="mt-12 rounded-2xl border border-cream-200 bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cream-700">Related build{related.length > 1 ? "s" : ""}</p>
+            <ul className="mt-3 space-y-2">
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <Link href={`/platforms/${r.slug}`} className="font-medium text-neutral-900 underline underline-offset-4 hover:text-neutral-600">
+                    {r.name}
+                  </Link>
+                  {r.tagline && <span className="text-neutral-500"> — {r.tagline}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
