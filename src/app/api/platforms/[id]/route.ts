@@ -49,6 +49,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ("imageAlt" in body) data.imageAlt = body.imageAlt || null;
   if ("imageCaption" in body) data.imageCaption = body.imageCaption || null;
   if ("embeddable" in body) data.embeddable = body.embeddable !== false;
+  if ("interactiveDemoUrl" in body) data.interactiveDemoUrl = body.interactiveDemoUrl || null;
   if ("whitepaper" in body) data.whitepaper = body.whitepaper || "";
   if ("displayStatus" in body) data.displayStatus = body.displayStatus || null;
   if ("relatedProjectSlugs" in body)

@@ -53,6 +53,12 @@ model Platform {
   // X-Frame-Options/CSP refuses to be framed (the "Launch demo" button
   // still works regardless — this only controls the in-page preview).
   embeddable    Boolean  @default(true)
+  // Path to a locally-hosted, self-contained interactive demo (e.g. a
+  // static HTML tool under /public) that opens in an accessible modal via
+  // InteractiveDemoModal — distinct from liveUrl, which is an external
+  // hosted product. Null for every platform except ones with a bespoke
+  // interactive artifact worth exploring in place.
+  interactiveDemoUrl String?
   whitepaper    String   @db.Text
   // Content-facing maturity label shown to visitors — "Internal tool",
   // "Prototype", "Public platform", "GTM system", "AI workflow", etc.

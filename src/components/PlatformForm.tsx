@@ -20,6 +20,7 @@ export type PlatformFormData = {
   imageAlt: string;
   imageCaption: string;
   embeddable: boolean;
+  interactiveDemoUrl: string;
   whitepaper: string;
   displayStatus: string;
   relatedProjectSlugs: string; // comma-separated in the form, array in the API
@@ -41,6 +42,7 @@ const EMPTY: PlatformFormData = {
   imageAlt: "",
   imageCaption: "",
   embeddable: true,
+  interactiveDemoUrl: "",
   whitepaper: "",
   displayStatus: "",
   relatedProjectSlugs: "",
@@ -85,6 +87,7 @@ export default function PlatformForm({ initial }: { initial?: Partial<PlatformFo
       imageAlt: form.imageAlt,
       imageCaption: form.imageCaption,
       embeddable: form.embeddable,
+      interactiveDemoUrl: form.interactiveDemoUrl,
       whitepaper: form.whitepaper,
       displayStatus: form.displayStatus,
       relatedProjectSlugs: csvToArray(form.relatedProjectSlugs),
@@ -138,6 +141,9 @@ export default function PlatformForm({ initial }: { initial?: Partial<PlatformFo
         </Field>
         <Field label="Repo URL">
           <input value={form.repoUrl} onChange={(e) => set("repoUrl", e.target.value)} className={inputClass} />
+        </Field>
+        <Field label="Interactive demo path" hint="Path to a locally-hosted static demo (e.g. /demos/hr-roadmap/index.html), opened in an accessible modal. Distinct from Live URL.">
+          <input value={form.interactiveDemoUrl} onChange={(e) => set("interactiveDemoUrl", e.target.value)} className={inputClass} placeholder="/demos/hr-roadmap/index.html" />
         </Field>
         <Field label="Display status" hint="Content-facing maturity label, e.g. 'Internal tool', 'Prototype', 'Public platform', 'GTM system', 'AI workflow'. Separate from Status below, which only controls visibility.">
           <input value={form.displayStatus} onChange={(e) => set("displayStatus", e.target.value)} className={inputClass} placeholder="e.g. Internal tool" />

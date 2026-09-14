@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import Markdown from "@/components/Markdown";
 import SiteNav from "@/components/SiteNav";
 import LiveEmbed from "@/components/LiveEmbed";
+import InteractiveDemoModal from "@/components/InteractiveDemoModal";
 import { initialsFrom } from "@/lib/initials";
 
 export default async function PlatformPage({ params }: { params: { slug: string } }) {
@@ -67,8 +68,16 @@ export default async function PlatformPage({ params }: { params: { slug: string 
             ))}
           </div>
 
-          {(platform.liveUrl || platform.repoUrl) && (
-            <div className="mt-8 flex gap-3">
+          {(platform.liveUrl || platform.repoUrl || platform.interactiveDemoUrl) && (
+            <div className="mt-8 flex flex-wrap gap-3">
+              {platform.interactiveDemoUrl && (
+                <InteractiveDemoModal
+                  demoUrl={platform.interactiveDemoUrl}
+                  modalTitle="HR Platform — Interactive Roadmap"
+                  triggerLabel="Open interactive roadmap ↗"
+                  triggerClassName="rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-700"
+                />
+              )}
               {platform.liveUrl && (
                 <a
                   href={platform.liveUrl}

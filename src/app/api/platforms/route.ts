@@ -48,6 +48,7 @@ export async function POST(req: Request) {
       imageAlt: body.imageAlt || null,
       imageCaption: body.imageCaption || null,
       embeddable: body.embeddable !== false,
+      interactiveDemoUrl: body.interactiveDemoUrl || null,
       whitepaper: body.whitepaper || "",
       displayStatus: body.displayStatus || null,
       relatedProjectSlugs: Array.isArray(body.relatedProjectSlugs)

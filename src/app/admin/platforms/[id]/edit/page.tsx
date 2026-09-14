@@ -26,6 +26,7 @@ export default async function EditPlatformPage({ params }: { params: { id: strin
           imageAlt: platform.imageAlt || "",
           imageCaption: platform.imageCaption || "",
           embeddable: platform.embeddable,
+          interactiveDemoUrl: platform.interactiveDemoUrl || "",
           whitepaper: platform.whitepaper,
           displayStatus: platform.displayStatus || "",
           relatedProjectSlugs: platform.relatedProjectSlugs.join(", "),

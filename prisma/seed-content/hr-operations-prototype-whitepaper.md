@@ -1,39 +1,35 @@
 ## Executive overview
 
-The HR Operations Intelligence Platform is an enterprise SaaS prototype designed to bring recruiting activity into a more coherent working environment.
+Building useful software starts with understanding how the work should happen. This project translates a broad HR and recruiting concept into defined workflows, an interactive prototype, and a structured plan for engineering and launch.
 
-The delivered scope centers on six navigable screens: dashboard, candidate profile, HR pipeline, interview schedule, tasks, and messages. Supporting work includes candidate-facing welcome screens, automated demonstrations, and an extensive implementation roadmap.
+The proposed platform brings candidate records, recruiting pipelines, interview scheduling, tasks, and communication into a client-branded workspace. The accompanying roadmap makes the delivery requirements visible: what needs to be built, which dependencies matter, and what must be ready before launch.
 
-The project demonstrates product definition and interaction design. It should not be presented as a fully engineered multi-tenant production service.
+## The business problem
 
-## Operational problem
+Recruiting teams manage a connected process through disconnected tools. Candidate information, interview coordination, follow-ups, and internal responsibilities can become fragmented.
 
-Recruiting teams routinely move between candidate records, calendars, meeting tools, tasks, and messages. That creates repeated context switching and makes it harder to maintain a complete view of each candidate's progress.
+The project examines that workflow as a whole and defines how a unified platform could support both day-to-day recruiting and the operational requirements of an enterprise service.
 
-The prototype explores how these activities could sit within a shared, client-branded workspace.
+## My contribution
 
-## Delivered design
+I defined the product scope, designed the prototype experience, mapped the proposed architecture, and built the interactive delivery-planning tool.
 
-The interface includes candidate history and notes, kanban-style recruiting stages, scheduling views, task assignment, and messaging screens.
+The work connects user-facing workflows with the less visible requirements behind them: tenant isolation, permissions, integration management, billing, service levels, onboarding, support, and launch readiness.
 
-The meeting concept keeps a video experience within the surrounding recruiter workflow. The export documents controls and interface behavior, but does not establish completed production integrations with Zoom, Google Meet, or Microsoft Teams.
+## Explore the roadmap
 
-The active visual system uses a light graphite background, dark ink, cobalt accents, and Geologica typography.
+The interactive example contains 178 engineering tasks across 19 roadmap sections, a registry of 40 vendor entries across 13 categories, and 64 go-to-market checklist items across 7 categories.
 
-## Architecture and delivery planning
-
-The proposed architecture includes tenant-specific branding, multi-tenancy, CRM synchronization, enterprise authentication, and subscription billing.
-
-These are architectural intentions, not evidence of production tenant isolation, executed vendor contracts, or operational billing.
-
-The supporting roadmap contains more than 130 tasks across 16 phases, a vendor registry, and a separate GTM checklist.
-
-## Interview intelligence and boundaries
-
-The prototype includes a behavioral interview intelligence concept with structured analysis and intended guardrails. This should not be marketed as validated prediction of candidate performance or guaranteed legal compliance.
-
-Any production implementation would require careful validation, privacy controls, bias evaluation, and accountable human review.
+Visitors can filter tasks, inspect priorities, distinguish prototype work from planned engineering, mark items complete, and explore vendor and launch-preparation sections. Checking an item only updates that visitor's own browser — it has no effect on the real project.
 
 ## What this demonstrates
 
-Translating an enterprise product concept into an interactive experience, clear design language, and a structured delivery plan.
+- Translating business requirements into a structured product scope.
+- Connecting interface design with operational dependencies.
+- Organizing complex delivery work into actionable phases.
+- Planning customer onboarding, support, and commercial launch.
+- Building an interactive tool that makes the plan easier to use.
+
+## Project scope
+
+The delivered work includes the interactive roadmap and the documented HR platform prototype described above. Enterprise integrations and production capabilities listed within the roadmap represent implementation scope under consideration, not completed deployments. Vendor names, pricing tiers, and approval steps referenced inside the roadmap are planning references — availability, terms, and technical suitability all require independent validation before any commitment.

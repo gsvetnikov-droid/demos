@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HR Operations Platform — Interactive Delivery Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F2F0;--paper:#FAFAF8;--ink:#15171A;--ink2:#2A2D33;
+  --ink-soft:#555A63;--ink-faint:#8A8E97;--accent:#2A6FDB;
+  --accent2:#6FB3C9;--bg-alt:#E7E7E3;--rule:rgba(21,23,26,.14);
+  --on-dark:#EAEAE6;--sidebar:#15171A;--sidebar-h:#1E2227;
+  --sidebar-a:#232830;--focus:#2A6FDB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Geologica',system-ui,sans-serif;font-size:13px;background:var(--bg);color:var(--ink);line-height:1.5}
+button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:none;cursor:pointer}
+.wrap{max-width:1020px;margin:0 auto;padding:20px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:3px}
+.hdr{background:var(--sidebar);border-radius:10px;padding:22px 24px;margin-bottom:14px}
+.hdr-top{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.hdr-badge{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.hdr-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pls 1.5s ease infinite}
+@media (prefers-reduced-motion: reduce){.hdr-badge-dot{animation:none}}
+.hdr-t{color:var(--on-dark);font-size:17px;font-weight:700;letter-spacing:-.01em}
+.hdr-s{color:rgba(234,234,230,.5);font-size:11px;margin-top:3px}
+.hdr-note{color:rgba(234,234,230,.38);font-size:10.5px;margin-top:6px;max-width:520px;line-height:1.5}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.hdr-eng{text-align:right}
+.hdr-eng-lbl{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(234,234,230,.3)}
+.hdr-eng-name{font-size:13px;font-weight:700;color:var(--on-dark);margin-top:2px}
+.hdr-status{font-size:10.5px;font-weight:700;padding:5px 11px;border-radius:5px;background:rgba(42,111,219,.18);color:#6FB3C9;white-space:nowrap}
+.pb{height:5px;background:rgba(255,255,255,.09);border-radius:3px;overflow:hidden;margin:0 0 5px}
+.pbf{height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+@media (prefers-reduced-motion: reduce){.pbf{transition:none}}
+.prow{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;font-size:11px}
+.prow span:first-child{color:rgba(234,234,230,.5)}
+.prow span:last-child{color:var(--accent);font-weight:700}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px}
+.sg{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:11px;text-align:center}
+.sgn{font-size:21px;font-weight:700;color:var(--ink);line-height:1}
+.sgl{font-size:10px;color:var(--ink-faint);margin-top:3px;font-weight:500}
+.tabs{display:flex;flex-wrap:wrap;background:var(--paper);border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.tab-btn{flex:1 1 160px;padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;text-align:center;border-right:1px solid var(--rule);transition:all .15s}
+.tab-btn:last-child{border-right:none}
+.tab-btn:hover{background:var(--bg-alt)}
+.tab-btn[aria-selected="true"]{background:var(--sidebar);color:var(--on-dark)}
+.fbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.fb{font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:5px;border:1px solid var(--rule);background:var(--paper);cursor:pointer;color:var(--ink-soft);transition:all .15s}
+.fb:hover{border-color:rgba(21,23,26,.22)}
+.fb[aria-pressed="true"]{background:var(--sidebar);color:var(--on-dark);border-color:var(--sidebar)}
+.ph{background:var(--paper);border:1px solid var(--rule);border-radius:9px;margin-bottom:7px;overflow:hidden}
+.phh{all:unset;display:flex;align-items:center;gap:10px;padding:12px 15px;cursor:pointer;transition:background .15s;width:100%;box-sizing:border-box}
+.phh:hover{background:var(--bg-alt)}
+.phd{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.phn{flex:1;min-width:0;text-align:left}
+.phnt{font-size:13px;font-weight:700;color:var(--ink)}
+.phns{font-size:11px;color:var(--ink-faint);margin-top:1px;font-weight:400}
+.phpr{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.phpb{width:60px;height:4px;background:var(--bg-alt);border-radius:2px;overflow:hidden}
+.phpbf{height:100%;border-radius:2px}
+.phct{font-size:11px;color:var(--ink-faint);min-width:32px;text-align:right;font-weight:500}
+.pharr{font-size:13px;color:var(--ink-faint);transition:transform .2s;flex-shrink:0;display:inline-block}
+.pharr.op{transform:rotate(90deg)}
+@media (prefers-reduced-motion: reduce){.pharr{transition:none}}
+.pbody{border-top:1px solid var(--rule)}
+.tk{display:flex;align-items:flex-start;gap:10px;padding:9px 15px;border-bottom:1px solid var(--rule);cursor:pointer;transition:background .15s}
+.tk:last-child{border-bottom:none}
+.tk:hover{background:var(--bg)}
+.tk.dn{background:var(--bg)}
+.cb-input{position:absolute;opacity:0;width:16px;height:16px;margin:0;cursor:pointer}
+.cb-wrap{position:relative;width:16px;height:16px;flex-shrink:0;margin-top:1px}
+.cb{width:16px;height:16px;border:1.5px solid var(--bg-alt);border-radius:4px;display:flex;align-items:center;justify-content:center;transition:all .15s;pointer-events:none}
+.cb.ck{background:var(--accent);border-color:var(--accent)}
+.cb-input:focus-visible ~ .cb{outline:2px solid var(--focus);outline-offset:2px}
+.tkt{font-size:12.5px;font-weight:500;color:var(--ink2);line-height:1.4}
+.tkt.dn{color:var(--ink-faint);text-decoration:line-through}
+.tags{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.01em}
+.pc{background:#FEE2E2;color:#991B1B}.ph2{background:#FEF3C7;color:#92400E}
+.pm{background:#F0FDF4;color:#14532D}.pl{background:#F5F3FF;color:#5B21B6}
+.tn{background:#EFF6FF;color:#1E3A8A;font-weight:800}
+.ts{background:#E0F2FE;color:#075985;font-weight:800}
+.tpr{background:rgba(42,111,219,.1);color:var(--accent)}
+.tcx{background:var(--bg-alt);color:var(--ink-soft)}
+.nb-badge{display:inline-block;font-size:9px;font-weight:800;padding:1px 6px;border-radius:3px;background:rgba(42,111,219,.12);color:var(--accent);margin-left:6px;vertical-align:middle;letter-spacing:.05em;text-transform:uppercase}
+.empty-state{padding:16px 15px;font-size:12px;color:var(--ink-faint);font-style:italic}
+/* banners */
+.banner{border-radius:8px;padding:11px 14px;margin-bottom:12px;font-size:12px;color:#15171A;background:rgba(42,111,219,.07);border:1px solid rgba(42,111,219,.15);border-left:4px solid #2A6FDB}
+.banner-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.banner-pill{font-size:11px;font-weight:700;padding:5px 11px;border-radius:5px;background:#2A6FDB;color:#EAEAE6;white-space:nowrap;flex-shrink:0}
+/* Vendor */
+.valert{background:#FFF9EC;border:1px solid rgba(180,93,0,.2);border-left:4px solid #B45D00;border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:#7C3D00;line-height:1.7}
+.vnote-global{font-size:11px;color:var(--ink-soft);margin-top:8px;padding-top:8px;border-top:1px dashed rgba(180,93,0,.3)}
+.vcat{background:var(--paper);border:1px solid var(--rule);border-radius:9px;margin-bottom:10px;overflow:hidden}
+.vcath{display:flex;align-items:center;gap:9px;padding:11px 15px;background:var(--bg);border-bottom:1px solid var(--rule)}
+.vcati{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.vcatl{font-size:13px;font-weight:700;color:var(--ink);flex:1}
+.vcatn{font-size:11px;color:var(--ink-faint)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.vcell{padding:14px 15px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.vname{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.vpurp{font-size:12px;color:var(--ink-soft);line-height:1.4;margin-bottom:8px}
+.vmeta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.vtag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.01em}
+.v-mod{background:#FEF3C7;color:#92400E}
+.v-complex{background:#FEE2E2;color:#991B1B}
+.v-low{background:#F0FDF4;color:#14532D}
+.v-med{background:#FEF3C7;color:#92400E}
+.v-high{background:#FEE2E2;color:#991B1B}
+.vappr{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:#FEF3C7;color:#92400E}
+.vnote{font-size:11.5px;color:var(--ink-faint);line-height:1.5;border-top:1px solid var(--rule);padding-top:8px;margin-top:8px}
+.vst-wrap{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.vstb{font-size:10.5px;font-weight:700;padding:4px 8px;border-radius:4px;cursor:pointer;border:2px solid transparent;transition:all .15s;opacity:.45}
+.vstb:hover{opacity:.75}
+.vstb[aria-pressed="true"]{opacity:1;border-color:currentColor}
+.vstb-none{background:var(--bg-alt);color:var(--ink-soft)}
+.vstb-eval{background:rgba(42,111,219,.1);color:var(--accent)}
+.vstb-ok{background:#F0FDF4;color:#14532D}
+.vstb-done{background:var(--sidebar);color:var(--accent2)}
+/* GTM */
+.gtm-cat{background:var(--paper);border:1px solid var(--rule);border-radius:9px;margin-bottom:8px;overflow:hidden}
+.gtm-cath{all:unset;display:flex;align-items:center;gap:10px;padding:12px 15px;background:var(--bg);border-bottom:1px solid var(--rule);cursor:pointer;width:100%;box-sizing:border-box}
+.gtm-cath:hover{background:var(--bg-alt)}
+.gtm-cat-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.gtm-cat-n{font-size:13px;font-weight:700;color:var(--ink);flex:1;text-align:left}
+.gtm-cat-s{font-size:11px;color:var(--ink-faint)}
+.gtm-body{border-top:1px solid var(--rule)}
+.gtm-tk{display:flex;align-items:flex-start;gap:10px;padding:9px 15px;border-bottom:1px solid var(--rule);cursor:pointer;transition:background .15s}
+.gtm-tk:last-child{border-bottom:none}
+.gtm-tk:hover{background:var(--bg)}
+.gtm-tk.dn{background:var(--bg)}
+.gtm-lbl{font-size:12.5px;font-weight:500;color:var(--ink2);flex:1;line-height:1.4}
+.gtm-lbl.dn{color:var(--ink-faint);text-decoration:line-through}
+.gtm-owner{font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--bg-alt);color:var(--ink-soft);white-space:nowrap;flex-shrink:0}
+.gtm-prog{height:3px;background:var(--bg-alt);border-radius:2px;overflow:hidden;margin:0 8px;flex-shrink:0}
+.gtm-prog-f{height:100%;border-radius:2px;background:var(--accent)}
+.footer-note{font-size:10.5px;color:var(--ink-faint);text-align:center;margin-top:16px;line-height:1.6}
+.storage-warning{background:#FFF9EC;border:1px solid rgba(180,93,0,.25);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:11.5px;color:#7C3D00}
+@keyframes pls{0%,100%{opacity:1}50%{opacity:.3}}
+@media (max-width:640px){
+  .vgrid{grid-template-columns:1fr}
+  .vcell{border-right:none}
+  .hdr-right{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="wrap"><div id="root" role="region" aria-label="HR Operations Platform interactive delivery roadmap"></div></div>
+<script>
+(function(){
+'use strict';
+
+var TASKS = [{"id":0,"col":"#374151","n":"Phase 0 — Infrastructure & Setup","s":"Scaffold, auth, database, monitoring, CI/CD from day one","t":[["0-1","Next.js + React + Tailwind CSS project scaffold","c","M",0,0],["0-2","PostgreSQL full schema — candidates, tenants, roles, tasks, transcripts, meetings","c","L",0,0],["0-3","AWS S3 Enterprise — resumes, photos, transcripts, OCR originals, avatars","h","S",0,0],["0-4","Auth0 Enterprise — authentication, invite flow, SSO, multi-tenant sessions","c","M",0,0],["0-5","Okta Enterprise — enterprise SSO, SAML/OIDC, identity governance","c","L",0,0],["0-6","Duo Security — enterprise 2FA: push notifications, hardware tokens, adaptive MFA","h","M",0,0],["0-7","Audit logging — all user actions: logins, edits, exports, deletions per tenant","h","M",0,0],["0-8","API gateway — NestJS, rate limiting, versioning, error handling, request tracing","h","M",0,0],["0-9","Sentry Business — error tracking, session replay, performance monitoring","h","S",0,0],["0-10","Cloudflare Enterprise — CDN, WAF, DDoS, wildcard subdomain routing from day one","h","S",0,0],["0-11","CI/CD pipeline — GitHub Actions, staging + production environments, automated tests","m","M",0,0],["0-12","Vanta — SOC 2 Type I automation, compliance monitoring, vendor risk management","h","M",0,0,"saas"]]},{"id":1,"col":"#2A6FDB","n":"Phase 1 — SaaS Foundation & Multi-Tenancy","s":"Tenant isolation, white-label config, feature flags, SaaS admin panel","new":true,"t":[["1-1","Multi-tenant architecture — PostgreSQL row-level security (RLS) per tenant ID","c","L",0,0,"saas"],["1-2","Tenant data isolation — all queries, files, and AI calls strictly scoped per tenant","c","L",0,0,"saas"],["1-3","Subdomain routing — {client}.platform.com + custom domain CNAME via Cloudflare Enterprise","h","M",0,0,"saas"],["1-4","Tenant onboarding wizard — self-serve signup → company setup → first admin invite","h","M",0,0,"saas"],["1-5","White-label config store — logo, colors (Graphite+Cobalt system), company name, domain, email sender","h","M",0,1,"saas"],["1-6","LaunchDarkly Enterprise — feature flags: enable/disable modules per subscription tier per tenant","c","M",0,0,"saas"],["1-7","SaaS super-admin panel — all tenants, usage stats, billing health, impersonate","h","L",0,0,"saas"],["1-8","Tenant health monitoring — usage thresholds, seat limits, storage alerts per plan","m","M",0,0,"saas"]]},{"id":2,"col":"#2A6FDB","n":"Phase 2 — Navigation & Core UI","s":"Landing page, login, nav framework, dashboard, white-label render","t":[["2-1","Platform marketing landing page — Graphite+Cobalt brand system, Geologica typeface","h","M",0,0],["2-2","Login + password creation from email invite (Auth0 hosted UI, white-labeled)","c","S",0,0],["2-3","Top navigation — module buttons, permission-aware visibility per role","h","M",0,0],["2-4","Sidebar navigation — active states, collapsible sections, role-gated items","h","S",0,1],["2-5","Dashboard framework — metric cards, widget grid, real-time data binding","h","M",0,1],["2-6","Per-tenant white-label renderer — applies client logo, colors, name from config","c","M",0,1],["2-7","User avatar system — upload photo or select from stock avatar library","l","S",0,1],["2-8","Global notification system — in-app alerts, unread count, Intercom integration","h","M",0,0],["2-9","Toast + undo/redo system (Ctrl+Z/Y) with platform-wide history stack","m","M",0,1]]},{"id":3,"col":"#0D9488","n":"Phase 3 — HR Module Core","s":"Candidate profiles, resume parsing, import systems, pipeline kanban","t":[["3-1","Candidate data model — 40+ fields: contact, professional, interview, intelligence","c","L",0,1],["3-2","Resume upload — PDF, DOCX, image with drag-and-drop interface","c","M",0,0],["3-3","Resume parsing — AWS Textract Enterprise: name, email, skills, work history, languages","c","L",0,0],["3-4","LinkedIn Talent Solutions import — name, company, title, URL, photo via enterprise API","h","L",0,0],["3-5","CSV/Excel bulk import — duplicate detection + conflict resolution + merge recommendations","h","L",0,0],["3-6","Candidate status system — color-coded with full immutable history tracking","c","M",0,1],["3-7","Open positions module — role, dept, salary, timezone, language, shift requirements","h","M",0,0],["3-8","HR pipeline kanban — drag-and-drop columns, candidate cards, filter bar","h","M",0,1],["3-9","Candidate search + advanced filter (role, status, location, skills, timezone, match score)","h","M",0,0],["3-10","Candidate full profile — 5 tabs: Overview, Resume, Interview, Notes, Intelligence","c","L",0,1],["3-11","Candidate activity log — full immutable audit of all changes and actions","h","M",0,0],["3-12","Recruiter + interviewer assignment system per candidate","h","M",0,0]]},{"id":4,"col":"#059669","n":"Phase 4 — Interview & Meeting System","s":"Scheduling, video APIs, in-app meeting room, invite customization","t":[["4-1","Interview scheduling workflow — assign, set time, send invite, confirm, track","c","M",0,0],["4-2","Zoom Enterprise API — OAuth meeting creation, link generation, recording webhooks","c","M",0,1],["4-3","Google Workspace Enterprise — Meet API OAuth, Calendar integration","c","M",0,1],["4-4","Microsoft 365 Enterprise E5 — Teams API (Graph), Azure AD, Exchange calendar","h","M",0,1],["4-5","In-app meeting room — embedded video, mute/camera, live chat, screen share, timer","h","L",0,1],["4-6","Interview status lifecycle — Scheduled → In Progress → Completed → SLA Active","c","S",0,0],["4-7","★ Meeting invite message composer — personalized text + merge tags per candidate","h","M",1,0],["4-8","★ Interviewer profile library — photo, name, title, dept per user","h","M",1,0],["4-9","★ Candidate welcome screen — who's joining + interviewer photos + client branding","h","L",1,0],["4-10","★ Branded invite email — candidate receives styled invite with interviewer cards","h","M",1,0],["4-11","★ Invite preview mode — recruiter sees exactly what candidate sees before sending","m","S",1,0]]},{"id":5,"col":"#EA580C","n":"Phase 5 — SLA & Follow-Up Automation","s":"Post-interview workflows, escalation timers, automation sequences","t":[["5-1","Interview completion checklist — auto-trigger after status → Completed","c","M",0,0],["5-2","4-hour recruiter reminder — internal notification + dashboard SLA badge","c","S",0,1],["5-3","24-hour escalation — secondary reminder + manager notification via Twilio Enterprise","c","S",0,1],["5-4","48-hour automatic candidate follow-up via SendGrid Premier","c","M",0,0],["5-5","72-hour manager escalation — PagerDuty alert, action required flag in dashboard","h","S",0,0],["5-6","SLA dashboard — real-time red/amber urgency tiers with overdue counters","h","M",0,1],["5-7","Follow-up sequence builder — client configures multi-step automation rules","m","L",0,0],["5-8","SLA history + automation audit log — all events timestamped, immutable","m","M",0,0]]},{"id":6,"col":"#7C3AED","n":"Phase 6 — OCR & Document Intelligence","s":"Screenshot reading, handwritten notes, resume image parsing","t":[["6-1","Screenshot OCR (AWS Textract Enterprise) — extract meeting links, times, names","h","M",0,0],["6-2","Handwritten notes OCR (English) — Google Cloud Vision Enterprise → notes field","h","M",0,0],["6-3","Handwritten notes OCR (Russian) — Google Cloud Vision Enterprise, CIS language pack","h","M",0,0],["6-4","Resume image parsing — photo of physical resume → structured candidate profile","m","M",0,0],["6-5","Auto-populate candidate fields from OCR output with confidence scoring","h","M",0,0],["6-6","OCR correction UI — user reviews + edits flagged fields before committing","m","M",0,0],["6-7","Original image stored in S3 Enterprise + displayed alongside extracted text","m","S",0,0]]},{"id":7,"col":"#DB2777","n":"Phase 7 — Messaging & Communications","s":"Internal messaging, LinkedIn Talent Solutions, outreach templates","t":[["7-1","Internal messaging — direct messages, candidate-linked threads, team channels","h","L",0,1],["7-2","Intercom Enterprise — in-app messaging, support inbox, onboarding tours","h","M",0,0],["7-3","@mentions + notification routing per user and team","m","M",0,0],["7-4","LinkedIn Talent Solutions — Recruiter, InMail, profile import, response tracking","h","L",0,0],["7-5","Outreach template library — create, save, version-control, share across team","h","M",0,0],["7-6","Multi-step follow-up sequence management — Twilio Enterprise SMS + SendGrid email","h","L",0,0],["7-7","Response status tracking — Contacted / Interested / No response / Scheduled","h","M",0,0],["7-8","Full messaging audit log per candidate — immutable, exportable","m","M",0,0]]},{"id":"crm","col":"#0F766E","n":"Phase 7.5 — CRM Integration (15 Systems)","s":"Bidirectional GET/POST API sync with top 15 enterprise CRM platforms via unified integration layer","new":true,"t":[["crm-1","Merge.dev Enterprise — unified CRM API layer: OAuth management, field mapping engine, sync for all 15 CRMs","c","L",0,0,"saas"],["crm-2","Salesforce Sales Cloud — bidirectional: candidates ↔ contacts/leads, interviews ↔ activities, pipeline ↔ opportunities","c","L",1,0],["crm-3","HubSpot Enterprise — bidirectional: candidate data, deal pipeline, email sequences, activity log, timeline sync","h","M",1,0],["crm-4","Microsoft Dynamics 365 — bidirectional sync via Microsoft Graph API (Azure AD already integrated in Phase 4)","h","M",1,0],["crm-5","Zoho CRM — OAuth 2.0 bidirectional: candidates, activities, contacts, pipeline stage sync","h","M",0,0],["crm-6","Pipedrive — REST API bidirectional: candidates, deals, activities, custom fields, webhook receiver","h","M",0,0],["crm-7","Freshsales (Freshworks) — OAuth + bidirectional candidate, pipeline, and contact sync","h","M",0,0],["crm-8","Monday.com CRM — GraphQL API bidirectional: board items, status automation, contact sync","m","M",0,0],["crm-9","Close CRM — REST API bidirectional: candidate import/export, activity logging, pipeline updates","m","M",0,0],["crm-10","Copper CRM — REST API + Google Workspace shared auth: contact, activity, pipeline sync","m","M",0,0],["crm-11","Zendesk Sell — REST API bidirectional: contacts, deals, visit logs, call activity sync","m","M",0,0],["crm-12","ActiveCampaign CRM — REST API + webhooks: contact sync, automation triggers, deal tracking","m","M",0,0],["crm-13","Keap, SugarCRM, Nimble, Insightly — REST API integrations via Merge.dev unified abstraction layer","l","M",0,0],["crm-14","Field mapping UI — per-CRM drag-and-drop custom field mapping per tenant, saved configuration","h","M",1,0],["crm-15","CRM sync dashboard — connection health, last sync timestamp, error logs, retry controls per CRM","h","M",1,0],["crm-16","Webhook receiver — real-time CRM event processing: contact updates → candidate status, deal changes","h","M",0,0],["crm-17","Conflict resolution engine — simultaneous update handling, last-write-wins with full audit trail","m","L",0,0]]},{"id":8,"col":"#4338CA","n":"Phase 8 — Transcript Intelligence","s":"AI parsing, keyword tagging, sentiment analysis, profile enrichment","t":[["8-1","Transcript upload — audio, video, text formats; stored in S3 Enterprise","c","M",0,0],["8-2","Parsing engine — OpenAI Enterprise + Anthropic Claude Enterprise hybrid NLP pipeline","c","L",0,0],["8-3","AI disruption detection — automation, AI replacing work, reduced headcount keywords","h","M",0,0],["8-4","Burnout signal extraction — overload, understaffing, unrealistic KPIs, attrition intent","h","M",0,0],["8-5","Compensation sentiment — low salary, no bonus, delayed pay, commission changes","h","M",0,0],["8-6","Company instability — layoffs, restructuring, merger, acquisition signals","h","M",0,0],["8-7","Growth concern detection — no promotion path, stagnant role, lack of leadership","m","M",0,0],["8-8","Work preference extraction — remote, US hours, relocation, flexible schedule","h","M",0,0],["8-9","Transcript full-text search — Elastic Enterprise (dedicated cluster, SSO, SLA)","h","L",0,0],["8-10","Profile AI enrichment — auto-update trend tags + scores from transcript analysis","c","L",0,0]]},{"id":"bii","col":"#1E3A5F","n":"Phase 8.5 — Behavioral Interview Intelligence (Optional Module)","s":"Multimodal communication analysis — engagement, confidence, consistency, cognitive load. Unvalidated roadmap concept, not a lie detector.","new":true,"t":[["bii-1","Optional module architecture — LaunchDarkly feature-toggle, role-permission controlled, per-tenant enable/disable","c","M",0,0,"saas"],["bii-2","Video ingestion pipeline — MP4/WebM to S3 Enterprise, async processing via Bull Queue, transcript timestamp alignment","h","M",0,0],["bii-3","Deepgram Enterprise — speech pace analysis, filler word density, hesitation frequency, speaker diarization, confidence map","c","L",1,0],["bii-4","Communication confidence scoring — pace shifts, response fluidity, sentence completion, hesitation pattern mapping","h","L",1,0],["bii-5","Engagement analysis — responsiveness scoring, conversational participation, interaction energy, timing consistency","h","M",1,0],["bii-6","Cognitive load indicators — pause analysis, speed changes, answer restructuring frequency (NEVER labeled as deception)","h","M",1,0],["bii-7","Response consistency checker — transcript cross-reference, timeline validation, contradiction flagging in neutral language","h","L",1,0],["bii-8","Professional communication evaluation — clarity, structure, leadership articulation, stakeholder communication score","h","M",1,0],["bii-9","Interview sentiment timeline — visual chart mapping confidence/engagement/cognitive load to interview question sections","h","L",1,0],["bii-10","Azure AI Video Indexer — lightweight high-level engagement only; NO race, ethnicity, religion, medical, or protected characteristic inference","h","L",0,0],["bii-11","Ethics & compliance layer — mandatory disclaimers hardcoded, output language guardrails (no deception/lying/dishonest labels ever generated)","c","M",0,0],["bii-12","BII dashboard UI — enterprise, operational, restrained; recruiter-focused; NOT futuristic AI aesthetic","h","M",1,0],["bii-13","Recruiter coaching module — interviewer quality scoring, question pattern analysis (architecture only, Phase-ready)","m","M",0,0],["bii-14","Multilingual BII — EN/RU analysis models, Deepgram multilingual, future-ready for additional languages","m","L",0,0],["bii-15","Behavioral trend analytics — cross-candidate benchmarks per client role type (opt-in, aggregated only)","l","M",0,0]]},{"id":9,"col":"#047857","n":"Phase 9 — Workforce Intelligence","s":"Trend dashboards, employment cycle analysis, market signals","t":[["9-1","Employment cycle calculator — avg tenure by role and company (normalized)","h","L",0,0],["9-2","Company name + job title normalization engine — deduplication at scale","h","M",0,0],["9-3","Workforce intelligence dashboard — top reasons candidates leave jobs","h","L",0,1],["9-4","AI disruption trend tracker — aggregate signals across all tenants over time","h","M",0,0],["9-5","Burnout trend indicators — sector and company level analysis, Snowflake-backed","h","M",0,1],["9-6","Salary expectation trends — by role, region, seniority; Snowflake Enterprise data","m","M",0,0],["9-7","High-turnover company tracker — identify and flag repeat sources","m","M",0,0],["9-8","Geographic hiring trends — LATAM, EMEA, APAC signals via Segment CDP","m","M",0,1],["9-9","Role transition pattern analysis — most common career moves by industry","l","M",0,0]]},{"id":10,"col":"#B45309","n":"Phase 10 — Candidate Matching Engine","s":"Scoring, ranking, AI-driven match with per-factor reasoning output (unvalidated scoring concept)","t":[["10-1","Core matching algorithm — 20+ factor scoring engine, real-time recalculation","c","L",0,0],["10-2","Timezone + shift compatibility scoring per open role requirements","h","M",0,0],["10-3","Language proficiency match — candidate level vs role minimum threshold","h","M",0,0],["10-4","AI-driven factors — leadership indicators, burnout risk, growth potential scoring","h","L",0,0],["10-5","Salary alignment scoring — candidate expectation vs role budget range","h","M",0,0],["10-6","Ranked output — match % + per-factor reasoning (94%, 87%, 79% format)","h","M",0,1],["10-7","Matching engine config UI — adjust factor weights per open role per client","m","M",0,0]]},{"id":11,"col":"#0369A1","n":"Phase 11 — Localization & Translation","s":"Russian UI, context-aware translation, enterprise HR terminology","t":[["11-1","Russian language UI — all modules, all screens, all form fields, all emails","h","L",0,0],["11-2","DeepL Enterprise — context-aware EN ↔ RU translation, HR terminology precision","h","L",0,0],["11-3","Russian professional HR phrasing library — recruiter-reviewed, version-controlled","h","M",0,0],["11-4","Language preference persistence after login per user, per tenant","m","S",0,0],["11-5","Translation management system — update strings without redeployment","m","M",0,0],["11-6","Future language support architecture — additional market readiness (FR, DE, ES)","l","M",0,0]]},{"id":12,"col":"#0284C7","n":"Phase 12 — Mobile First","s":"Responsive design, touch targets, OCR-first mobile workflows","t":[["12-1","Full mobile responsive pass — all screens, all modules, all form flows","h","L",0,0],["12-2","Large touch targets (44px min) + swipe-friendly actions per platform HIG","h","M",0,0],["12-3","Sticky mobile navigation + bottom tab bar for core modules","h","M",0,0],["12-4","OCR-first mobile workflow — camera → Google Cloud Vision → candidate field","h","M",0,0],["12-5","Mobile candidate review — status change, notes, follow-up in 3 taps","h","M",0,0],["12-6","Mobile dashboard — large status indicators, swipeable SLA alerts","m","M",0,0]]},{"id":"d","col":"#6FB3C9","n":"Phase 12.5 — Automated Demo & Smoke Test System","s":"Interactive product demo, feature walkthroughs, automated smoke testing","new":true,"t":[["d-1","Demo landing page — Graphite+Cobalt brand, Geologica typeface, pricing, feature grid","h","M",0,0,"saas"],["d-2","Interactive feature demo system — click any feature → automated production walkthrough","c","L",1,0],["d-3","Per-feature demo scripts — 8 features × 4 production steps each, fully animated","h","L",1,0],["d-4","Demo player controls — play/pause, step-through, progress bar, keyboard navigation","m","M",1,0],["d-5","Sandbox tenant — isolated demo environment with realistic seeded data","c","L",0,0,"saas"],["d-6","Smoke test suite (Playwright) — automated critical path checks before every deploy","c","M",0,0],["d-7","Demo reset — one-click data reset to clean state for sales calls","h","S",1,0],["d-8","Guided onboarding tour — first-login walkthrough for new client admins via Intercom","h","M",0,0,"saas"],["d-9","Demo analytics — Mixpanel Enterprise tracks which features prospects interact with most","m","M",0,0,"saas"]]},{"id":13,"col":"#BE185D","n":"Phase 13 — SaaS Billing & Subscriptions","s":"Stripe Enterprise, subscription tiers, usage metering, client portal","new":true,"t":[["13-1","Stripe Enterprise — subscriptions, webhooks, customer objects, SLA, custom contract","c","M",0,0,"saas"],["13-2","Subscription tier definitions — Starter / Professional / Enterprise (feature sets + limits)","c","M",0,0,"saas"],["13-3","Feature gating per tier — enforce seat limits, candidate caps, AI usage via LaunchDarkly","c","M",0,0,"saas"],["13-4","Usage tracking per tenant — candidates, seats, AI tokens, storage, OCR calls per period","h","L",0,0,"saas"],["13-5","Metered billing (Stripe Enterprise) — AI transcript and OCR usage billed above plan limit","h","M",0,0,"saas"],["13-6","Stripe Tax — automated VAT, GST, sales tax across 40+ countries","h","S",0,0,"saas"],["13-7","Billing portal (Stripe Customer Portal) — self-serve plan changes, invoices, card management","h","S",0,0,"saas"],["13-8","14-day free trial management — auto-convert or expire, tracked in Segment","h","M",0,0,"saas"],["13-9","Upgrade/downgrade flow — prorated billing, instant feature unlock via LaunchDarkly","h","M",0,0,"saas"],["13-10","Dunning, grace period, and suspension on non-payment — automated via Stripe + webhooks","h","M",0,0,"saas"]]},{"id":14,"col":"#6D28D9","n":"Phase 14 — Sales & Operations Modules","s":"Sales pipeline, ops workflows, reporting, executive dashboards","t":[["14-1","Sales module — pipeline, deals, contacts, activity; HubSpot Enterprise sync","m","L",0,0],["14-2","Operations workflow system — cross-department task routing and coordination","m","L",0,0],["14-3","Reporting engine — configurable builder, PDF/CSV export, Snowflake-backed","m","L",0,0],["14-4","Executive dashboard — KPIs, pipeline health, hire rate; Mixpanel Enterprise charts","m","M",0,0],["14-5","AI recommendation layer — action suggestions from data patterns via OpenAI Enterprise","l","L",0,0],["14-6","Segment Enterprise CDP — unify customer data, feed analytics + marketing automation","m","L",0,0]]},{"id":15,"col":"#DC2626","n":"Phase 15 — Platform Hardening","s":"Performance, security audit, SOC 2, client portal, load testing","t":[["15-1","Performance — query tuning, ElastiCache Redis, lazy loading, Cloudflare edge caching","h","L",0,0],["15-2","Security penetration test (third-party firm) + OWASP compliance sign-off","c","L",0,0],["15-3","SOC 2 Type II audit — Vanta automated, third-party auditor engaged","c","L",0,0,"saas"],["15-4","QA/compliance — audit trails, data retention policies, GDPR + Russian 152-FZ controls","h","M",0,0],["15-5","Client portal — white-label external read-only pipeline view for client stakeholders","m","L",0,0],["15-6","Load testing (k6 Enterprise) — target scope: 100K+ candidates, 500+ concurrent users across tenants","h","L",0,0],["15-7","Disaster recovery + backup restore verification — RTO/RPO targets documented","h","M",0,0],["15-8","Documentation — API docs (Mintlify), admin handbook, white-label setup guide","m","M",0,0]]}];
+var VENDORS = [{"cat":"Identity & Authentication","col":"#374151","v":[{"n":"Auth0 Enterprise","pur":"Multi-tenant user auth, invite flow, enterprise SSO, SAML/OIDC, anomaly detection","ph":"Phase 0","cx":"Moderate","cost":"Enterprise contract — custom pricing","appr":false,"risk":"Low","note":"An enterprise auth platform supporting unlimited tenants, custom domains, and enterprise SSO. This decision affects the entire multi-tenancy architecture."},{"n":"Okta Workforce Identity","pur":"Enterprise SSO, identity governance, SCIM provisioning, SAML federation","ph":"Phase 0","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"An enterprise identity platform. Integrates with Auth0 for federated identity. Required for enterprise clients expecting SSO on their corporate IdP."},{"n":"Duo Security (Cisco)","pur":"Enterprise 2FA — push notifications, hardware tokens, adaptive MFA, risk-based auth","ph":"Phase 0","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"An enterprise MFA option. Mandatory for Superuser and Admin roles. Adaptive MFA blocks suspicious logins automatically. Cisco-backed with enterprise SLA."}]},{"cat":"SaaS Infrastructure","col":"#2A6FDB","v":[{"n":"Stripe Enterprise","pur":"Subscription billing, metered usage, invoicing, tax, Customer Portal, custom SLA","ph":"Phase 13","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":true,"risk":"Low","note":"Enterprise contract unlocks volume pricing, dedicated support, SLA, and data residency options. Required for global SaaS billing. Includes Stripe Tax for automated VAT/GST across 40+ countries."},{"n":"LaunchDarkly Enterprise","pur":"Feature flags per tenant per plan, gradual rollouts, audit log, enterprise SSO","ph":"Phase 1","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Enterprise-grade feature management. Required for subscription tier feature gating. SOC 2 Type II compliant. Supports custom rules: enable feature X only when tenant.plan === \"enterprise\"."},{"n":"Vercel Enterprise","pur":"Next.js hosting, wildcard subdomain routing, edge network, team controls","ph":"Phase 0","cx":"Simple","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Native Next.js platform. Wildcard domains handle {client}.platform.com with zero config. Enterprise adds custom SLA, SAML SSO, audit logs, and dedicated support."},{"n":"Vanta","pur":"SOC 2 / ISO 27001 automation, continuous compliance monitoring, vendor risk","ph":"Phase 0","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Automates a large share of SOC 2 evidence collection. Required from day one — compliance evidence must be gathered continuously. Enterprise clients will request SOC 2 report before signing."}]},{"cat":"Video Conferencing","col":"#059669","v":[{"n":"Zoom Enterprise","pur":"OAuth meeting creation, recording, transcription, enterprise admin controls, SSO","ph":"Phase 4","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":true,"risk":"Medium","note":"Marketplace app approval is required before production use — confirm current review timelines directly with Zoom. Enterprise license includes advanced API limits, dedicated support, and SLA."},{"n":"Google Workspace Enterprise Plus","pur":"Meet API, Calendar API, enterprise admin, Drive, Vault, DLP, 24/7 support","ph":"Phase 4","cx":"Moderate","cost":"Enterprise Plus pricing — quote required","appr":true,"risk":"Low","note":"One Google Cloud project covers Meet, Calendar, Vision, and Translation APIs. Enterprise Plus includes advanced security, audit, and compliance. Required for Google-org enterprise clients."},{"n":"Microsoft 365 Enterprise E5","pur":"Teams API (Graph), Exchange, Azure AD, enterprise compliance, advanced security","ph":"Phase 4","cx":"Complex","cost":"E5 pricing — quote required","appr":true,"risk":"Medium","note":"Most complex video integration. Azure AD multi-tenant app registration required. E5 tier provides full Graph API access, advanced compliance, and eDiscovery. Budget extra sprint time."}]},{"cat":"AWS Enterprise (Cloud Infrastructure)","col":"#EA580C","v":[{"n":"AWS Enterprise Support + S3","pur":"File storage, 15-min response SLA, TAM, concierge support, architectural reviews","ph":"Phase 0","cx":"Simple","cost":"Enterprise Support pricing — quote required","appr":false,"risk":"Low","note":"Enterprise Support is commonly used at production scale. Includes Technical Account Manager (TAM), concierge support, and architectural guidance. Critical for multi-tenant data isolation strategy."},{"n":"AWS Textract Enterprise","pur":"OCR at scale — resume parsing, screenshot extraction, structured form parsing","ph":"Phase 6","cx":"Moderate","cost":"Enterprise pricing — volume discount negotiable","appr":false,"risk":"Low","note":"Production-grade OCR with enterprise throughput limits. Track per-tenant usage for metered billing. Pair with Google Cloud Vision for Russian handwriting accuracy."},{"n":"AWS RDS + ElastiCache Enterprise","pur":"Managed PostgreSQL (Multi-AZ, read replicas) + Redis for caching and SLA queues","ph":"Phase 0","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Multi-AZ RDS with automated failover and read replicas. ElastiCache Redis for Bull Queue SLA timers. Row-level security in PostgreSQL is the foundation of multi-tenancy."},{"n":"AWS SES + Simple Email Sending","pur":"Transactional email at scale — SLA follow-ups, meeting invites, billing notifications","ph":"Phase 5","cx":"Simple","cost":"Enterprise pricing — quote required","appr":true,"risk":"Low","note":"Exit SES sandbox in Phase 0. Configure per-tenant white-label From: addresses. Requires domain verification and SPF/DKIM/DMARC. Complements SendGrid Premier for marketing flows."}]},{"cat":"AI & Intelligence","col":"#4338CA","v":[{"n":"OpenAI Enterprise","pur":"GPT-4o transcript analysis, keyword extraction, sentiment, match reasoning at scale","ph":"Phase 8","cx":"Moderate","cost":"Enterprise — custom pricing, zero data retention","appr":false,"risk":"Medium","note":"Enterprise agreement includes: no model training on your data, zero data retention, SOC 2 compliance, dedicated capacity, and enterprise SLA. Required before processing candidate transcripts in production."},{"n":"Anthropic Claude Enterprise","pur":"Hybrid AI for transcript analysis, matching engine validation, structured output","ph":"Phase 8","cx":"Moderate","cost":"Enterprise — custom pricing, BAA available","appr":false,"risk":"Low","note":"Enterprise agreement mirrors OpenAI: no training on data, privacy controls, dedicated support. Used for nuanced HR analysis. Use in parallel with OpenAI for cross-validation on critical decisions."},{"n":"Elastic Enterprise (Elasticsearch)","pur":"Full-text transcript search, candidate indexing, trend aggregation, Kibana dashboards","ph":"Phase 8","cx":"Complex","cost":"Enterprise pricing — quote required","appr":false,"risk":"Medium","note":"Dedicated Elastic Cloud cluster with enterprise support, SAML SSO, and encryption at rest. Index schema must be designed in Phase 8 planning — difficult to change post-ingestion. Namespace by tenant ID."},{"n":"Deepgram Enterprise","pur":"Speech analysis — pace, filler words, hesitation, speaker diarization, word-level timestamps for BII","ph":"Phase 8.5","cx":"Moderate","cost":"Enterprise — custom contract, volume pricing","appr":false,"risk":"Low","note":"A speech intelligence API. Deepgram Enterprise includes: data privacy guarantees, no model training on your audio, SOC 2 compliance, dedicated throughput, and SLA. Required for Behavioral Interview Intelligence module speech analysis layer."},{"n":"Azure AI Video Indexer","pur":"Lightweight video intelligence — high-level engagement analysis only for BII; NO protected characteristic inference","ph":"Phase 8.5","cx":"Moderate","cost":"Enterprise — Azure Cognitive Services, consumption-based","appr":false,"risk":"Low","note":"Microsoft enterprise-grade video analysis. Already in Azure ecosystem (Teams integration). Used for high-level facial engagement only per BII spec — system is hardcoded to never infer race, ethnicity, religion, medical conditions, or any protected characteristic."},{"n":"Google Cloud Vision Enterprise","pur":"Russian handwriting OCR, multilingual document parsing, superior to Textract for CIS scripts","ph":"Phase 6","cx":"Moderate","cost":"Enterprise pricing — volume discount negotiable","appr":false,"risk":"Low","note":"Used for Russian, Ukrainian, and Georgian handwriting recognition. One GCP project covers Vision, Meet, Calendar, and Translation. Track per-tenant calls for metered billing."}]},{"cat":"Email & Communications","col":"#DB2777","v":[{"n":"SendGrid Premier (Twilio)","pur":"Branded transactional email — meeting invites with interviewer cards, SLA follow-ups","ph":"Phase 5","cx":"Simple","cost":"Premier pricing — quote required","appr":true,"risk":"Low","note":"Premier tier includes dedicated IP pools, email deliverability consulting, and a Technical Account Manager. Supports per-tenant white-label From: addresses. Critical for branded meeting invite emails."},{"n":"Twilio Enterprise","pur":"SMS escalations, WhatsApp notifications, voice, enterprise support, SLA contract","ph":"Phase 5","cx":"Moderate","cost":"Enterprise — custom contract, volume pricing","appr":true,"risk":"Low","note":"Enterprise contract includes priority support, SLA, custom pricing, and dedicated account team. A2P 10DLC registration is required for US SMS; confirm current processing time directly with the provider. Required for 72-hour manager SLA escalation."}]},{"cat":"LinkedIn & Sourcing","col":"#1D4ED8","v":[{"n":"LinkedIn Talent Solutions (Enterprise)","pur":"LinkedIn Recruiter, InMail credits, Recruiter System Connect (RSC) API integration","ph":"Phase 3","cx":"Complex","cost":"LinkedIn Recruiter pricing — quote required","appr":true,"risk":"High","note":"LinkedIn Recruiter System Connect (RSC) is an enterprise API integration requiring a formal LinkedIn partnership application. Approval timelines are set by LinkedIn and should be confirmed directly. Evaluate alongside alternative sourcing integrations before committing to a single path."},{"n":"HireEZ (formerly Hiretual)","pur":"Enterprise AI sourcing — LinkedIn + 45 other platforms, ATS sync, diversity filters","ph":"Phase 3","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Interim solution while LinkedIn RSC approval is pending. Aggregates profiles from 45+ platforms. Enterprise tier includes API access, ATS integration, and SOC 2. Reduces dependency on single LinkedIn API."}]},{"cat":"Translation & Localization","col":"#7C3AED","v":[{"n":"DeepL Enterprise","pur":"Context-aware EN ↔ RU professional translation — HR terminology, contracts, UI strings","ph":"Phase 11","cx":"Simple","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Enterprise agreement includes: dedicated data processing, no training on your data, SLA, and volume pricing. Used for professional HR content and Russian legal/business phrasing translation."},{"n":"Phrase (Memsource)","pur":"Translation management platform — manage all string files, translator workflows, QA","ph":"Phase 11","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Enterprise TMS for managing Russian + future language localization. Integrates with GitHub for automated string extraction and deployment. Replaces manual spreadsheet-based string management."}]},{"cat":"Monitoring, DevOps & Security","col":"#047857","v":[{"n":"Datadog Enterprise","pur":"APM, infrastructure monitoring, log management, RUM, security monitoring, SLA","ph":"Phase 0","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Install from day one. Tag all metrics by tenant_id for per-client performance visibility. Enterprise includes Security Monitoring (SIEM), Sensitive Data Scanner, and a dedicated CSM. Commonly used at enterprise scale."},{"n":"PagerDuty Enterprise","pur":"Incident management, on-call scheduling, stakeholder communication, SLA breach alerts","ph":"Phase 0","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Manages 72-hour SLA escalations and production incident response. Integrates with Datadog for automated alerting. Enterprise includes AIOps (noise reduction), stakeholder updates, and audit trail."},{"n":"Sentry Business","pur":"Error tracking, session replay, performance monitoring, source maps","ph":"Phase 0","cx":"Simple","cost":"Business pricing — quote required","appr":false,"risk":"Low","note":"Install on day one. Tag errors by tenant_id for per-client debugging. Configure Next.js Source Maps for full stack trace fidelity. Integrate with PagerDuty for critical error escalation."},{"n":"Cloudflare Enterprise","pur":"CDN, advanced WAF, DDoS mitigation, wildcard subdomains, Bot Management, SLA","ph":"Phase 0","cx":"Simple","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Enterprise WAF with custom rulesets. Bot Management blocks credential stuffing. Wildcard subdomain routing for {client}.platform.com with zero code. 24/7 emergency support and network SLA."}]},{"cat":"Data, Analytics & CDP","col":"#6FB3C9","v":[{"n":"Snowflake Enterprise","pur":"Data warehouse for workforce intelligence, trend analytics, cross-tenant aggregation","ph":"Phase 9","cx":"Complex","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Required for Phase 9 cross-tenant workforce intelligence aggregation. Snowflake separates tenant-level data from platform-level analytics. Enterprise includes data sharing, governance, and unlimited users."},{"n":"Segment Enterprise (Twilio)","pur":"Customer Data Platform — unify product usage, feed analytics, marketing, and success tools","ph":"Phase 14","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Single source of truth for all user and tenant behavioral data. Feeds Mixpanel (product analytics), HubSpot (CRM), and Datadog (observability). Enterprise includes 24/7 support and data residency options."},{"n":"Mixpanel Enterprise","pur":"Product analytics — feature adoption, funnel analysis, demo interaction tracking","ph":"Phase 12.5","cx":"Simple","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Used for demo analytics (which features prospects interact with) and production feature adoption. Segment feeds Mixpanel automatically. Enterprise includes data residency, SAML SSO, and priority support."}]},{"cat":"CRM & Customer Success","col":"#BE185D","v":[{"n":"HubSpot Enterprise (Sales + Marketing Hub)","pur":"CRM for SaaS sales motion, deal pipeline, outreach sequences, marketing automation","ph":"Phase 14","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Enterprise CRM for managing the SaaS sales pipeline. Segment syncs product usage data to HubSpot for usage-based sales signals. Tracks deal stages from demo → trial → paid → expansion."},{"n":"Intercom Enterprise","pur":"In-app messaging, customer support, onboarding tours, product announcement system","ph":"Phase 7","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Powers in-app onboarding tours, guided first-login flows, support inbox, and product announcements. Enterprise includes custom roles, workspaces, and SLA. Critical for client success and churn reduction."}]},{"cat":"CRM Integration Layer","col":"#0F766E","v":[{"n":"Merge.dev Enterprise","pur":"Unified CRM API platform — single integration covering all 15 CRMs with OAuth, field mapping, and sync management","ph":"Phase 7.5","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Merge.dev Enterprise is proposed as the core of the CRM integration strategy. One integration point replaces 15 separate OAuth implementations. Covers Salesforce, HubSpot, Dynamics, Zoho, Pipedrive, Freshsales, Monday, Close, Copper, Zendesk Sell, ActiveCampaign, Keap, SugarCRM, Nimble, and Insightly. Enterprise includes data residency, SOC 2, SLA, and dedicated support."},{"n":"Salesforce Enterprise (Sales Cloud)","pur":"Flagship CRM — full bidirectional: candidates, contacts, leads, opportunities, activities, custom objects","ph":"Phase 7.5","cx":"Complex","cost":"Enterprise Edition pricing — quote required","appr":true,"risk":"Medium","note":"Most critical CRM integration — most enterprise clients will be on Salesforce. Native REST and SOAP API. Merge.dev handles OAuth and field mapping. Plan for custom object creation in Salesforce to store platform-specific data. Requires Salesforce admin collaboration from client side."},{"n":"Microsoft Dynamics 365 (Sales)","pur":"Enterprise CRM bidirectional sync via Microsoft Graph API — already integrated via Azure AD in Phase 4","ph":"Phase 7.5","cx":"Complex","cost":"Dynamics 365 Sales Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Auth layer reuses existing Azure AD integration from Phase 4 (Teams). Dataverse API for bidirectional sync. Enterprise clients on Microsoft stack will expect native Dynamics integration. Merge.dev simplifies the integration path significantly."}]},{"cat":"Compliance & Legal","col":"#DC2626","v":[{"n":"OneTrust Enterprise","pur":"GDPR consent management, CCPA, data subject requests, privacy ops, cookie compliance","ph":"Phase 15","cx":"Moderate","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Required for EU candidate data. Russian Federal Law No. 152-FZ may require data residency within Russia for Russian citizen data — consult legal counsel. OneTrust maps data flows per tenant for cross-border compliance."},{"n":"Stripe Tax (Enterprise)","pur":"Automated global tax calculation — VAT, GST, US sales tax across 40+ countries","ph":"Phase 13","cx":"Simple","cost":"Enterprise pricing — quote required","appr":false,"risk":"Low","note":"Included in Stripe Enterprise contract. Handles tax registration, calculation, and remittance automatically. Essential for SaaS billing across multiple jurisdictions without a tax team."}]}];
+var GTM = [{"cat":"Product Readiness","col":"#2A6FDB","items":[["gr-1","All Phase 0–12 tasks complete and signed off by Gennady Svetnikov","Engineering","c"],["gr-2","White-label config system validated with 3 pilot clients — logo, colors, domain","Engineering","c"],["gr-3","Mobile audit passed — all screens ≥ WCAG AA, tested on iOS + Android","Engineering","h"],["gr-4","Automated smoke test suite (Playwright) passing 100% on every deploy","QA","c"],["gr-5","Load test completed against target — 500 concurrent users, <200ms P95 response (acceptance criteria)","Engineering","c"],["gr-6","Security penetration test completed — third-party firm, report reviewed + signed off","Security","c"],["gr-7","SOC 2 Type I report received from auditor — required before enterprise sales","Legal/Security","h"],["gr-8","Data Privacy Impact Assessment (DPIA) completed for EU + Russian candidate data","Legal","h"],["gr-9","Disaster recovery test completed against target — RTO ≤ 4h, RPO ≤ 1h (acceptance criteria)","Engineering","h"],["gr-10","Automated demo system live and tested across all 8 feature walkthroughs","Marketing","h"]]},{"cat":"Pricing & Packaging","col":"#BE185D","items":[["pp-1","Subscription tiers finalized — Starter / Professional / Enterprise features + limits agreed","Product","c"],["pp-2","Feature matrix per tier documented, approved, and published internally","Product","c"],["pp-3","Pricing page copy written, reviewed by legal, and approved by Gennady Svetnikov","Marketing","h"],["pp-4","Annual vs monthly discount structure decided and configured in Stripe Enterprise","Finance","h"],["pp-5","Enterprise custom pricing playbook created for sales team (floor prices, discounts, terms)","Sales","h"],["pp-6","Free trial terms confirmed — 14 days, no credit card required for Starter/Pro","Product","m"],["pp-7","Overage pricing set — AI transcript calls + OCR per 1000 units above plan limit","Finance","h"],["pp-8","Billing FAQ written for sales and support teams","Sales/Support","m"]]},{"cat":"Legal & Compliance","col":"#DC2626","items":[["lc-1","Terms of Service — finalized, legal reviewed, published on platform domain","Legal","c"],["lc-2","Privacy Policy — finalized, covers GDPR + Russian 152-FZ + CCPA, published","Legal","c"],["lc-3","Data Processing Agreement (DPA) template created — required by enterprise clients","Legal","c"],["lc-4","Enterprise SLA agreement template — uptime, support tier, credits, escalation path","Legal","h"],["lc-5","White-label reseller agreement template — for partners offering platform to their clients","Legal","h"],["lc-6","GDPR consent flows implemented, tested, and documented per OneTrust Enterprise","Legal/Eng","h"],["lc-7","Cookie policy compliant across all client subdomains","Legal/Eng","m"],["lc-8","Russian Federal Law 152-FZ legal opinion received — data residency strategy documented","Legal","h"],["lc-9","Export controls review — ensure no ITAR/EAR issues with cross-border data processing","Legal","m"]]},{"cat":"Sales & Marketing","col":"#059669","items":[["sm-1","Platform domain registered, SSL configured, Cloudflare Enterprise routing live","Engineering","c"],["sm-2","Marketing site live — Graphite+Cobalt brand, Geologica, demo, pricing, case studies","Marketing","c"],["sm-3","Interactive demo system embedded on marketing site and tested in 3 browsers","Marketing/Eng","h"],["sm-4","Sales deck finalized — 10 slides max, reviewed by Gennady Svetnikov","Sales","h"],["sm-5","Product one-pager PDF — white-label positioning, key metrics, ROI framing","Marketing","h"],["sm-6","Cold outreach sequences written — LinkedIn InMail + email, 5-step cadence each","Sales","m"],["sm-7","HubSpot Enterprise CRM configured — pipeline stages, deal properties, sequences","Sales","h"],["sm-8","ICP defined — HR tech companies, BPO firms, staffing agencies, ≥50 recruiters","Sales","c"],["sm-9","10 lighthouse target clients identified and personalized outreach prepared","Sales","h"],["sm-9b","CRM integration one-pager created — compatibility matrix for all 15 systems, sent to sales prospects","Sales","h"],["sm-9c","Behavioral Interview Intelligence ethics brief prepared — compliance summary for enterprise legal review","Legal/Product","h"],["sm-10","G2 and Capterra profiles created — ready for first client reviews at launch","Marketing","m"]]},{"cat":"Customer Success & Onboarding","col":"#7C3AED","items":[["cs-1","Client onboarding playbook documented — 30 steps from signup to first candidate pipeline","CS","h"],["cs-2","Admin handbook written — white-label setup, user management, billing, integrations","CS/Eng","h"],["cs-3","Video onboarding series created — 6 short videos covering core workflows","CS/Marketing","m"],["cs-4","Intercom Enterprise help center configured — articles, search, guided tours","CS/Eng","h"],["cs-5","Support SLA defined per plan — Starter: 48h, Professional: 8h, Enterprise: 2h","CS/Legal","h"],["cs-6","CSM (Customer Success Manager) process defined — health scoring, QBR cadence","CS","m"],["cs-7","NPS survey process defined — quarterly, results feed product roadmap review","CS/Product","m"],["cs-8","Churn risk scoring model defined — usage drop, seat count, billing issues = alerts","CS/Engineering","h"],["cs-9","Escalation path documented — L1 Intercom → L2 CS → L3 Engineering → Gennady","CS","h"]]},{"cat":"Infrastructure Go-Live","col":"#047857","items":[["ig-1","Production environment deployed — Vercel Enterprise, AWS Enterprise, Cloudflare Enterprise","Engineering","c"],["ig-2","Datadog Enterprise dashboards live — per-tenant health, API latency, queue depth","Engineering","h"],["ig-3","PagerDuty on-call rotation set up — primary and backup engineers defined","Engineering","h"],["ig-4","Incident response runbook written — severity levels, response times, comms template","Engineering","h"],["ig-5","Stripe Enterprise billing live in production — at least one test subscription processed","Engineering","c"],["ig-6","DNS + SSL verified for wildcard subdomain routing via Cloudflare Enterprise","Engineering","c"],["ig-7","First pilot client migrated, stable, and satisfied — sign-off received","CS/Engineering","c"],["ig-8","Backup restore process verified — tested full restore in staging, RTO confirmed","Engineering","h"]]},{"cat":"Launch Sequence","col":"#B45309","items":[["ls-1","3 pilot client case studies written and approved for use in marketing","Marketing","h"],["ls-2","Pilot client feedback incorporated — all critical UX issues resolved","Product/Eng","c"],["ls-3","Press release drafted and reviewed by Gennady Svetnikov — embargo date set","Marketing","m"],["ls-4","LinkedIn announcement drafted and scheduled — video demo + customer quote","Marketing","m"],["ls-5","Product Hunt launch planned — teaser posts, hunter identified, assets ready","Marketing","l"],["ls-6","Referral program designed — existing clients incentivized to refer (fee or credit)","Sales","m"],["ls-7","Launch day runbook written — hour-by-hour plan, responsibilities, escalation path","Engineering","h"],["ls-8","Post-launch monitoring plan — Datadog dashboards watched 24/7 for first 72 hours","Engineering","h"]]}];
+
+var PC={c:'pc',h:'ph2',m:'pm',l:'pl'}, PL={c:'Critical',h:'High',m:'Medium',l:'Low'};
+
+// ---- Guarded, namespaced storage with in-memory fallback ----
+var STORAGE_PREFIX = 'hrRoadmapDemo:';
+var memoryStore = {};
+var storageAvailable = (function(){
+  try {
+    var t = '__hr_roadmap_demo_probe__';
+    window.localStorage.setItem(t, '1');
+    window.localStorage.removeItem(t);
+    return true;
+  } catch (e) { return false; }
+})();
+function safeGet(key){
+  if (storageAvailable) {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_PREFIX + key);
+      if (!raw) return {};
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+      return {};
+    } catch (e) { return {}; }
+  }
+  return memoryStore[key] || {};
+}
+function safeSet(key, value){
+  if (storageAvailable) {
+    try { window.localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value)); return; }
+    catch (e) { /* fall through to memory */ }
+  }
+  memoryStore[key] = value;
+}
+function safeClearAll(){
+  // Only ever clears THIS demo's three namespaced keys — never localStorage.clear().
+  if (storageAvailable) {
+    try {
+      window.localStorage.removeItem(STORAGE_PREFIX + 'tasks');
+      window.localStorage.removeItem(STORAGE_PREFIX + 'vendors');
+      window.localStorage.removeItem(STORAGE_PREFIX + 'gtm');
+    } catch (e) {}
+  }
+  memoryStore = {};
+}
+
+var dn = safeGet('tasks');
+var vs = safeGet('vendors');
+var gtmDone = safeGet('gtm');
+var op = {}, gtmOp = {}, fl = 'all', mode = 'tasks';
+var openByDefault = true; // all phases/categories start expanded, matching the original roadmap
+
+function persist(){ safeSet('tasks', dn); safeSet('vendors', vs); safeSet('gtm', gtmDone); }
+
+function isPhaseOpen(i){ return op[i] !== undefined ? op[i] : openByDefault; }
+function isGtmOpen(i){ return gtmOp[i] !== undefined ? gtmOp[i] : openByDefault; }
+
+function counts(){
+  var total=0,done=0,nw=0,pr=0,saas=0;
+  TASKS.forEach(function(p){ p.t.forEach(function(t){ total++; if(dn[t[0]])done++; if(t[4])nw++; if(t[5])pr++; if(t[6]==='saas')saas++; }); });
+  return {total:total,done:done,nw:nw,pr:pr,saas:saas};
+}
+function vCounts(){
+  var total=0, withStatus=0;
+  VENDORS.forEach(function(c){ c.v.forEach(function(v){ total++; if ((vs[vendorKey(c,v)]||'none') !== 'none') withStatus++; }); });
+  return {total:total, withStatus:withStatus};
+}
+function gtmCounts(){
+  var total=0,done=0;
+  GTM.forEach(function(c){ c.items.forEach(function(i){ total++; if(gtmDone[i[0]])done++; }); });
+  return {total:total,done:done};
+}
+function vendorKey(cat, v){ return cat.cat + '::' + v.n; }
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+var root = document.getElementById('root');
+var CHECK_SVG = '<svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true"><path d="M1.5 4.5l2 2L7.5 2" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function render(){
+  var c = counts();
+  var vc = vCounts();
+  var gc = gtmCounts();
+  var pct = c.total ? Math.round(c.done/c.total*100) : 0;
+  var gpct = gc.total ? Math.round(gc.done/gc.total*100) : 0;
+
+  var h = '';
+  h += '<div class="hdr">';
+  h += '<div class="hdr-top">';
+  h += '<div class="hdr-left">';
+  h += '<div class="hdr-badge"><span class="hdr-badge-dot" aria-hidden="true"></span>White-Label &middot; Multi-Tenant &middot; SaaS &middot; Enterprise</div>';
+  h += '<div class="hdr-t">HR Operations Platform — Interactive Delivery Roadmap</div>';
+  h += '<div class="hdr-s">Graphite + Cobalt &middot; Geologica &middot; ' + TASKS.length + ' roadmap sections &middot; ' + c.total + ' tasks &middot; ' + vc.total + ' vendor entries &middot; ' + gc.total + ' GTM items</div>';
+  h += '<div class="hdr-note">Portfolio demo &middot; based on the September 2026 roadmap. This is a delivery-planning document, not the production HR platform — nothing here reflects completed engineering work.</div>';
+  h += '</div>';
+  h += '<div class="hdr-right">';
+  h += '<div class="hdr-eng"><div class="hdr-eng-lbl">Product Architecture &amp; Build Planning</div><div class="hdr-eng-name">Gennady Svetnikov</div></div>';
+  h += '<div class="hdr-status">Your demo progress: ' + pct + '% of tasks checked</div>';
+  h += '</div>';
+  h += '</div>';
+  h += '<div class="pb" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100" aria-label="Demo task completion"><div class="pbf" style="width:' + pct + '%"></div></div>';
+  h += '<div class="prow"><span>Demo progress — tasks checked: ' + c.done + '/' + c.total + ' &middot; GTM items checked: ' + gc.done + '/' + gc.total + '</span><span>' + pct + '% checked &middot; ' + gpct + '% GTM checked</span></div>';
+  h += '</div>';
+
+  h += '<div class="sgrid">';
+  h += '<div class="sg"><div class="sgn">' + c.total + '</div><div class="sgl">Roadmap tasks</div></div>';
+  h += '<div class="sg"><div class="sgn" style="color:var(--accent)">' + c.done + '</div><div class="sgl">Checked in demo</div></div>';
+  h += '<div class="sg"><div class="sgn" style="color:#BE185D">' + c.saas + '</div><div class="sgl">SaaS-specific</div></div>';
+  h += '<div class="sg"><div class="sgn" style="color:var(--accent2)">' + vc.total + '</div><div class="sgl">Vendor entries</div></div>';
+  h += '<div class="sg"><div class="sgn" style="color:#059669">' + gc.done + '/' + gc.total + '</div><div class="sgl">GTM checked</div></div>';
+  h += '</div>';
+
+  h += '<div class="tabs" role="tablist" aria-label="Roadmap sections">';
+  h += tabBtn('tasks', '📋 Build Phases (' + c.total + ')');
+  h += tabBtn('vendors', '🔌 Enterprise Vendors (' + vc.total + ')');
+  h += tabBtn('gtm', '🚀 GTM Checklist (' + gc.done + '/' + gc.total + ')');
+  h += '</div>';
+
+  if (!storageAvailable) {
+    h += '<div class="storage-warning" role="status">Your browser is blocking local storage in this context, so demo progress won’t be saved between visits. Everything below still works — checked items just reset if you reload.</div>';
+  }
+
+  if (mode === 'tasks') h += renderTasks(c);
+  else if (mode === 'vendors') h += renderVendors(vc);
+  else h += renderGtm(gc);
+
+  h += '<div class="footer-note">Representative delivery plan. Checking items here updates only your browser’s view of this demo and does not change any real project status.</div>';
+
+  root.innerHTML = h;
+}
+
+function tabBtn(m, label){
+  var selected = mode === m;
+  return '<button class="tab-btn" role="tab" aria-selected="' + selected + '" data-action="set-mode" data-mode="' + m + '">' + label + '</button>';
+}
+
+function renderTasks(c){
+  var h = '';
+  h += '<div class="banner"><div class="banner-row"><div>';
+  h += '<div style="font-size:12.5px;font-weight:700;color:#15171A">Explore the build plan</div>';
+  h += '<div style="font-size:11px;color:#555A63;margin-top:2px">Check off tasks to try the tool — this only affects your browser’s copy of the demo. Filter by phase content, priority, or type using the buttons below.</div>';
+  h += '</div><div class="banner-pill">Phase 0 → Start here</div></div></div>';
+
+  h += '<div class="fbar" role="group" aria-label="Task filters">';
+  h += filterBtn('all', 'All tasks');
+  h += filterBtn('todo', 'Todo');
+  h += filterBtn('done', 'Completed');
+  h += filterBtn('saas', 'SaaS / Billing');
+  h += filterBtn('new', '★ New features');
+  h += filterBtn('crit', 'Critical only');
+  h += filterBtn('proto', 'Prototyped');
+  h += '</div>';
+
+  TASKS.forEach(function(ph, i){
+    var ts = ph.t;
+    if (fl === 'todo') ts = ts.filter(function(t){ return !dn[t[0]]; });
+    else if (fl === 'done') ts = ts.filter(function(t){ return dn[t[0]]; });
+    else if (fl === 'new') ts = ts.filter(function(t){ return t[4]; });
+    else if (fl === 'crit') ts = ts.filter(function(t){ return t[2] === 'c'; });
+    else if (fl === 'proto') ts = ts.filter(function(t){ return t[5]; });
+    else if (fl === 'saas') ts = ts.filter(function(t){ return t[6] === 'saas'; });
+
+    var pd = ph.t.filter(function(t){ return dn[t[0]]; }).length, pt = ph.t.length, pp = pt ? Math.round(pd/pt*100) : 0;
+    var isOp = isPhaseOpen(i);
+    var bodyId = 'phase-body-' + i;
+
+    h += '<div class="ph">';
+    h += '<button class="phh" aria-expanded="' + isOp + '" aria-controls="' + bodyId + '" data-action="toggle-phase" data-phase-index="' + i + '">';
+    h += '<span class="phd" style="background:' + ph.col + '" aria-hidden="true"></span>';
+    h += '<span class="phn"><span class="phnt">' + esc(ph.n) + (ph['new'] ? '<span class="nb-badge">NEW</span>' : '') + '</span><span class="phns">' + esc(ph.s) + '</span></span>';
+    h += '<span class="phpr"><span class="phpb"><span class="phpbf" style="width:' + pp + '%;background:' + ph.col + '"></span></span><span class="phct">' + pd + '/' + pt + '</span></span>';
+    h += '<span class="pharr' + (isOp ? ' op' : '') + '" aria-hidden="true">›</span>';
+    h += '</button>';
+    if (isOp) {
+      h += '<div class="pbody" id="' + bodyId + '">';
+      if (!ts.length) {
+        h += '<div class="empty-state">No tasks in this phase match the current filter.</div>';
+      } else {
+        ts.forEach(function(t){
+          var isDone = !!dn[t[0]];
+          var cbId = 'task-cb-' + t[0];
+          h += '<label class="tk' + (isDone ? ' dn' : '') + '" for="' + cbId + '">';
+          h += '<span class="cb-wrap"><input type="checkbox" id="' + cbId + '" class="cb-input" data-action="toggle-task" data-task-id="' + t[0] + '"' + (isDone ? ' checked' : '') + '><span class="cb' + (isDone ? ' ck' : '') + '" aria-hidden="true">' + (isDone ? CHECK_SVG : '') + '</span></span>';
+          h += '<span style="flex:1;min-width:0"><span class="tkt' + (isDone ? ' dn' : '') + '">' + esc(t[1]) + '</span>';
+          h += '<span class="tags">';
+          h += '<span class="tag ' + PC[t[2]] + '">' + PL[t[2]] + '</span>';
+          h += '<span class="tag tcx">' + (t[3] === 'S' ? 'Small' : t[3] === 'M' ? 'Medium' : 'Large') + ' effort</span>';
+          if (t[4]) h += '<span class="tag tn">★ New</span>';
+          if (t[5]) h += '<span class="tag tpr">Prototype ✓</span>';
+          if (t[6] === 'saas') h += '<span class="tag ts">SaaS</span>';
+          h += '</span></span></label>';
+        });
+      }
+      h += '</div>';
+    }
+    h += '</div>';
+  });
+  return h;
+}
+
+function filterBtn(f, label){
+  return '<button class="fb" aria-pressed="' + (fl === f) + '" data-action="set-filter" data-filter="' + f + '">' + label + '</button>';
+}
+
+function renderVendors(vc){
+  var stMap = {none:'Not started', eval:'In evaluation', contracted:'Contracted', integrated:'Integrated'};
+  var stCls = {none:'vstb-none', eval:'vstb-eval', contracted:'vstb-ok', integrated:'vstb-done'};
+  var h = '';
+  h += '<div class="banner"><strong style="font-size:12.5px">Your demo progress: ' + vc.withStatus + ' of ' + vc.total + ' vendor entries have a status set.</strong>';
+  h += '<div style="font-size:11px;color:#555A63;margin-top:4px">Select a status directly on any vendor — Not started, In evaluation, Contracted, or Integrated. Changes save only in your browser.</div></div>';
+  h += '<div class="valert">';
+  h += '<strong>Planning references, not commitments:</strong> the phase tags below (e.g. "Phase 0") indicate when a vendor decision is relevant in the plan, not a confirmed order of execution.';
+  h += '<div class="vnote-global">Vendor options and integration scope are planning references. Availability, terms, and technical suitability require validation. Selecting a status here is a personal planning note within this demo — it does not certify compliance, confirm legal terms, or represent a completed integration.</div>';
+  h += '</div>';
+
+  VENDORS.forEach(function(cat){
+    h += '<div class="vcat"><div class="vcath"><span class="vcati" style="background:' + cat.col + '" aria-hidden="true"></span><span class="vcatl">' + esc(cat.cat) + '</span><span class="vcatn">' + cat.v.length + ' vendor' + (cat.v.length > 1 ? 's' : '') + '</span></div><div class="vgrid">';
+    cat.v.forEach(function(v){
+      var key = vendorKey(cat, v);
+      var st = vs[key] || 'none';
+      var cx = v.cx === 'Simple' ? '' : (v.cx === 'Moderate' ? 'v-mod' : 'v-complex');
+      var rt = v.risk === 'Low' ? 'v-low' : (v.risk === 'Medium' ? 'v-med' : 'v-high');
+      h += '<div class="vcell">';
+      h += '<div class="vname">' + esc(v.n) + '</div><div class="vpurp">' + esc(v.pur) + '</div>';
+      h += '<div class="vmeta">';
+      h += '<span class="vtag v-ph">' + esc(v.ph) + '</span>';
+      h += cx ? ('<span class="vtag ' + cx + '">' + esc(v.cx) + '</span>') : '<span class="vtag" style="background:#F0FDF4;color:#14532D">Simple setup</span>';
+      h += '<span class="vtag" style="background:var(--sidebar);color:var(--accent2)">' + esc(v.cost) + '</span>';
+      h += '<span class="vtag ' + rt + '">Risk: ' + esc(v.risk) + '</span>';
+      if (v.appr) h += '<span class="vtag vappr">⚠ Approval required</span>';
+      h += '</div>';
+      h += '<div class="vst-wrap" role="group" aria-label="Integration status for ' + esc(v.n) + '">';
+      ['none','eval','contracted','integrated'].forEach(function(s){
+        h += '<button class="vstb ' + stCls[s] + '" aria-pressed="' + (st === s) + '" data-action="set-vendor-status" data-vendor-key="' + esc(key) + '" data-status="' + s + '">' + stMap[s] + '</button>';
+      });
+      h += '</div>';
+      h += '<div class="vnote">' + esc(v.note) + '</div>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  });
+  return h;
+}
+
+function renderGtm(gc){
+  var h = '';
+  h += '<div class="banner"><strong style="font-size:12.5px">Your demo progress: ' + gc.done + ' of ' + gc.total + ' GTM checklist items checked.</strong>';
+  h += '<div style="font-size:11px;color:#555A63;margin-top:4px">GTM preparation is planned to run in parallel with the later build phases; legal, compliance, and key vendor actions are planned to start earlier. Checking an item here is a demo interaction only.</div></div>';
+  GTM.forEach(function(cat, ci){
+    var cd = cat.items.filter(function(i){ return gtmDone[i[0]]; }).length;
+    var ct = cat.items.length;
+    var cp = ct ? Math.round(cd/ct*100) : 0;
+    var isOp = isGtmOpen(ci);
+    var bodyId = 'gtm-body-' + ci;
+    h += '<div class="gtm-cat">';
+    h += '<button class="gtm-cath" aria-expanded="' + isOp + '" aria-controls="' + bodyId + '" data-action="toggle-gtm-cat" data-gtm-cat-index="' + ci + '">';
+    h += '<span class="gtm-cat-dot" style="background:' + cat.col + '" aria-hidden="true"></span>';
+    h += '<span class="gtm-cat-n">' + esc(cat.cat) + '</span>';
+    h += '<span class="gtm-prog" style="width:80px"><span class="gtm-prog-f" style="width:' + cp + '%"></span></span>';
+    h += '<span class="gtm-cat-s">' + cd + '/' + ct + '</span>';
+    h += '<span class="pharr' + (isOp ? ' op' : '') + '" aria-hidden="true" style="margin-left:6px">›</span>';
+    h += '</button>';
+    if (isOp) {
+      h += '<div class="gtm-body" id="' + bodyId + '">';
+      cat.items.forEach(function(item){
+        var isDone = !!gtmDone[item[0]];
+        var cbId = 'gtm-cb-' + item[0];
+        h += '<label class="gtm-tk' + (isDone ? ' dn' : '') + '" for="' + cbId + '">';
+        h += '<span class="cb-wrap"><input type="checkbox" id="' + cbId + '" class="cb-input" data-action="toggle-gtm" data-gtm-id="' + item[0] + '"' + (isDone ? ' checked' : '') + '><span class="cb' + (isDone ? ' ck' : '') + '" aria-hidden="true">' + (isDone ? CHECK_SVG : '') + '</span></span>';
+        h += '<span class="gtm-lbl' + (isDone ? ' dn' : '') + '">' + esc(item[1]) + '</span>';
+        h += '<span class="gtm-owner">' + esc(item[2]) + '</span>';
+        h += '<span class="tag ' + PC[item[3]] + '" style="margin-left:4px">' + PL[item[3]] + '</span>';
+        h += '</label>';
+      });
+      h += '</div>';
+    }
+    h += '</div>';
+  });
+  return h;
+}
+
+// ---- Event delegation ----
+root.addEventListener('click', function(e){
+  var el = e.target.closest('[data-action]');
+  if (!el) return;
+  var action = el.getAttribute('data-action');
+  if (action === 'set-mode') { mode = el.getAttribute('data-mode'); render(); }
+  else if (action === 'set-filter') { fl = el.getAttribute('data-filter'); render(); }
+  else if (action === 'toggle-phase') { var i = el.getAttribute('data-phase-index'); op[i] = !isPhaseOpen(i); render(); }
+  else if (action === 'toggle-gtm-cat') { var gi = el.getAttribute('data-gtm-cat-index'); gtmOp[gi] = !isGtmOpen(gi); render(); }
+  else if (action === 'set-vendor-status') {
+    var key = el.getAttribute('data-vendor-key');
+    var status = el.getAttribute('data-status');
+    vs[key] = status;
+    persist();
+    render();
+  }
+});
+root.addEventListener('change', function(e){
+  var el = e.target;
+  if (el.matches('[data-action="toggle-task"]')) {
+    var id = el.getAttribute('data-task-id');
+    dn[id] = el.checked;
+    persist();
+    render();
+  } else if (el.matches('[data-action="toggle-gtm"]')) {
+    var gid = el.getAttribute('data-gtm-id');
+    gtmDone[gid] = el.checked;
+    persist();
+    render();
+  }
+});
+
+// ---- Parent-controlled reset (same-origin direct call, no postMessage spoofing surface) ----
+window.__hrRoadmapDemo = {
+  reset: function(){
+    dn = {}; vs = {}; gtmDone = {};
+    safeClearAll();
+    render();
+  }
+};
+
+// ---- Escape key inside the iframe closes the parent modal ----
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape' && window.parent && window.parent !== window) {
+    try { window.parent.postMessage({ source: 'hr-roadmap-demo', type: 'escape' }, window.location.origin); } catch (err) {}
+  }
+});
+
+// ---- Tell the parent we've loaded (parent validates origin+source before acting) ----
+if (window.parent && window.parent !== window) {
+  try { window.parent.postMessage({ source: 'hr-roadmap-demo', type: 'ready' }, window.location.origin); } catch (err) {}
+}
+
+render();
+})();
+</script>
+</body>
+</html>
