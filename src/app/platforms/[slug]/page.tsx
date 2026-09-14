@@ -12,10 +12,10 @@ export default async function PlatformPage({ params }: { params: { slug: string 
   if (!platform || platform.status !== "PUBLISHED") notFound();
 
   return (
-    <div className="bg-stone-50">
+    <div className="bg-cream-50">
       <SiteNav />
 
-      <header className="border-b border-neutral-200">
+      <header className="border-b border-cream-200">
         <div className="mx-auto max-w-3xl px-6 py-16">
           <Link href="/" className="text-sm font-medium text-neutral-500 transition hover:text-neutral-900">
             ← Back to showcase
@@ -28,7 +28,7 @@ export default async function PlatformPage({ params }: { params: { slug: string 
                 alt={platform.name}
                 width={72}
                 height={72}
-                className="h-[72px] w-[72px] rounded-2xl border border-neutral-200 object-cover"
+                className="h-[72px] w-[72px] rounded-2xl border border-cream-200 object-cover"
               />
             ) : (
               <span className="flex h-[72px] w-[72px] items-center justify-center rounded-2xl bg-neutral-900 text-2xl font-bold tracking-wide text-white">
@@ -43,12 +43,12 @@ export default async function PlatformPage({ params }: { params: { slug: string 
 
           <div className="mt-6 flex flex-wrap items-center gap-2">
             {platform.category && (
-              <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-neutral-500">
+              <span className="rounded-full bg-cream-200 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-cream-800">
                 {platform.category}
               </span>
             )}
             {platform.techStack.map((tech) => (
-              <span key={tech} className="rounded-md bg-neutral-100 px-2 py-0.5 text-xs text-neutral-500">
+              <span key={tech} className="rounded-md bg-cream-100 px-2 py-0.5 text-xs text-cream-800">
                 {tech}
               </span>
             ))}
@@ -71,7 +71,7 @@ export default async function PlatformPage({ params }: { params: { slug: string 
                   href={platform.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-neutral-900 transition hover:border-neutral-400 hover:bg-white"
+                  className="rounded-full border border-cream-300 px-5 py-2.5 text-sm font-semibold text-neutral-900 transition hover:border-cream-400 hover:bg-white"
                 >
                   View repo
                 </a>
@@ -82,8 +82,8 @@ export default async function PlatformPage({ params }: { params: { slug: string 
           {platform.highlights.length > 0 && (
             <ul className="mt-10 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {platform.highlights.map((h) => (
-                <li key={h} className="flex gap-2.5 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-700">
-                  <span className="text-neutral-400">✓</span>
+                <li key={h} className="flex gap-2.5 rounded-xl border border-cream-200 bg-white px-4 py-3 text-sm text-neutral-700">
+                  <span className="text-cream-600">✓</span>
                   {h}
                 </li>
               ))}
@@ -94,7 +94,7 @@ export default async function PlatformPage({ params }: { params: { slug: string 
 
       {platform.liveUrl && platform.embeddable && (
         <div className="mx-auto max-w-4xl px-6 py-16">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400">Try it yourself</p>
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-cream-700">Try it yourself</p>
           <LiveEmbed url={platform.liveUrl} />
         </div>
       )}

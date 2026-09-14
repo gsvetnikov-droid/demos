@@ -14,12 +14,12 @@ export default function LiveEmbed({ url }: { url: string }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm">
-      <div className="flex items-center gap-2 border-b border-neutral-200 bg-neutral-50 px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
-        <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
-        <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
-        <span className="ml-2 truncate rounded-md border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-500">
+    <div className="overflow-hidden rounded-3xl border border-cream-200 bg-white shadow-sm">
+      <div className="flex items-center gap-2 border-b border-cream-200 bg-cream-100 px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-cream-300" />
+        <span className="h-2.5 w-2.5 rounded-full bg-cream-300" />
+        <span className="h-2.5 w-2.5 rounded-full bg-cream-300" />
+        <span className="ml-2 truncate rounded-md border border-cream-200 bg-white px-3 py-1 text-xs text-neutral-500">
           {host}
         </span>
       </div>

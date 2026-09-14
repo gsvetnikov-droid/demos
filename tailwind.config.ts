@@ -6,6 +6,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Warm cream accent for the public site — background, borders,
+        // pills/tags, section dividers. Kept separate from `brand` (still
+        // used by the admin tool) so re-theming one never touches the other.
+        cream: {
+          50: "#fdfbf6",
+          100: "#f8f1e2",
+          200: "#f0e2c2",
+          300: "#e4cd97",
+          400: "#d6b56d",
+          500: "#c39c4d",
+          600: "#a37f3c",
+          700: "#816432",
+          800: "#69512c",
+          900: "#584427",
+        },
         brand: {
           50: "#eef3ff",
           100: "#dfe8ff",

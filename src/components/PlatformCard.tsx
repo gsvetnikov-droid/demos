@@ -16,9 +16,9 @@ export default function PlatformCard({ platform }: { platform: PlatformCardData 
   return (
     <Link
       href={`/platforms/${platform.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-cream-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
-      <div className="flex h-40 items-center justify-center overflow-hidden border-b border-neutral-200 bg-neutral-50">
+      <div className="flex h-40 items-center justify-center overflow-hidden border-b border-cream-200 bg-cream-100">
         {platform.coverImageUrl ? (
           <Image
             src={platform.coverImageUrl}
@@ -35,7 +35,7 @@ export default function PlatformCard({ platform }: { platform: PlatformCardData 
       </div>
       <div className="flex flex-1 flex-col gap-2 p-6">
         {platform.category && (
-          <span className="w-fit rounded-full bg-neutral-100 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-neutral-500">
+          <span className="w-fit rounded-full bg-cream-200 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-cream-800">
             {platform.category}
           </span>
         )}
@@ -45,7 +45,7 @@ export default function PlatformCard({ platform }: { platform: PlatformCardData 
         {platform.tags.length > 0 && (
           <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
             {platform.tags.slice(0, 4).map((tag) => (
-              <span key={tag} className="rounded-md bg-neutral-100 px-2 py-0.5 text-xs text-neutral-500">
+              <span key={tag} className="rounded-md bg-cream-100 px-2 py-0.5 text-xs text-cream-800">
                 {tag}
               </span>
             ))}

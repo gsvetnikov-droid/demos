@@ -10,7 +10,7 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="bg-stone-50">
+    <div className="bg-cream-50">
       <SiteNav />
 
       <section className="mx-auto max-w-5xl px-6 pb-16 pt-24 sm:pt-32">
@@ -24,7 +24,7 @@ export default async function HomePage() {
 
       <section id="platforms" className="mx-auto max-w-5xl px-6 pb-28">
         {platforms.length === 0 ? (
-          <p className="rounded-3xl border border-dashed border-neutral-300 bg-white p-14 text-center text-neutral-400">
+          <p className="rounded-3xl border border-dashed border-cream-300 bg-white p-14 text-center text-neutral-400">
             Nothing published yet — add a platform from{" "}
             <a href="/admin" className="text-neutral-900 underline underline-offset-4">
               /admin
@@ -46,7 +46,7 @@ export default async function HomePage() {
         )}
       </section>
 
-      <footer className="border-t border-neutral-200 py-8">
+      <footer className="border-t border-cream-200 py-8">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 text-xs text-neutral-400">
           <span>© {new Date().getFullYear()}</span>
           <a href="/admin" className="hover:text-neutral-600">

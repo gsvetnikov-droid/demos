@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-stone-50 font-sans text-neutral-900 antialiased">{children}</body>
+      <body className="min-h-screen bg-cream-50 font-sans text-neutral-900 antialiased">{children}</body>
     </html>
   );
 }
