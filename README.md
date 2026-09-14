@@ -21,7 +21,7 @@ cp .env.example .env
 # fill in DATABASE_URL / DIRECT_URL (any Postgres works for local dev)
 # generate NEXTAUTH_SECRET: openssl rand -base64 32
 # generate ADMIN_PASSWORD_HASH: npm run hash-password -- 'your-password'
-npm run db:push      # creates the schema (no migrations folder yet — see below)
+npm run db:push      # syncs the schema to your local/dev database
 npm run db:seed      # seeds the CRM platform as a DRAFT
 npm run dev
 ```
@@ -45,16 +45,11 @@ redeploy — that's the whole point of the admin layer.
    `DATABASE_URL` / `DIRECT_URL`.
 3. Set `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, `ADMIN_USERNAME`, and
    `ADMIN_PASSWORD_HASH` (see `.env.example`).
-4. Deploy. `vercel-build` runs `prisma migrate deploy` automatically — but
-   since this repo doesn't have a `prisma/migrations` folder yet (it was
-   built with `db push` during development), run `npx prisma migrate dev
-   --name init` once locally against a real database before your first
-   deploy, commit the generated `prisma/migrations/` folder, then deploy.
-   (Or keep using `prisma db push` against production directly if you'd
-   rather skip migrations entirely for a single-editor site like this —
-   just don't mix the two approaches on the same database.)
-5. Run `npm run db:seed` once (locally, pointed at the production
-   `DATABASE_URL`) to seed the first platform.
+4. Deploy. `vercel-build` runs `prisma migrate deploy` (applies the
+   included `prisma/migrations/` folder — creates the `Platform` table on
+   first deploy, a no-op on every deploy after) and then the seed script
+   (upserts the CRM platform row — also a no-op once it already exists),
+   before building. Nothing manual needed for either step.
 
 ## Notes
 
