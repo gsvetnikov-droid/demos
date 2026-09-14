@@ -1,0 +1,55 @@
+// Postgres (free tier — Neon, same pattern as the CRM project). Fields are
+// plain strings/string-arrays rather than native enums, validated in
+// application code — keeps the schema simple for a single-editor site.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Neon's pooled connection (the "-pooler" hostname, used by DATABASE_URL
+  // for normal app traffic) is PgBouncer in transaction mode, which drops
+  // the session between statements -- `prisma migrate deploy`'s advisory
+  // lock times out against it (P1002). DIRECT_URL is Neon's non-pooled
+  // connection string, used only by Prisma's CLI/migration commands.
+  directUrl = env("DIRECT_URL")
+}
+
+// One showcased project — the CRM is the first row, 5 more get added the
+// same way (via /admin, or a future import script) without any schema
+// change. `whitepaper` is the long-form case-study content (Markdown,
+// rendered with react-markdown on the public page); `summary` is the
+// short blurb shown on the gallery card.
+model Platform {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  tagline       String?
+  summary       String?  @db.Text
+  category      String?
+  tags          String[] @default([])
+  techStack     String[] @default([])
+  highlights    String[] @default([])
+  liveUrl       String?
+  repoUrl       String?
+  // Emoji shown on the gallery card / whitepaper header when there's no
+  // real screenshot yet — cheap placeholder branding, same idea as an
+  // Artifact's favicon. coverImageUrl overrides it once a real image
+  // exists somewhere reachable (S3, Vercel Blob, etc. — not stored here).
+  iconEmoji     String?
+  coverImageUrl String?
+  whitepaper    String   @db.Text
+  // DRAFT | PUBLISHED — only PUBLISHED rows show on the public site;
+  // DRAFT lets a platform be prepared in the admin before it's ready to
+  // show anyone.
+  status        String   @default("DRAFT")
+  // Manual display order on the gallery (lower first) — set from the
+  // admin list via up/down controls, not auto-computed.
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status])
+  @@index([sortOrder])
+}
