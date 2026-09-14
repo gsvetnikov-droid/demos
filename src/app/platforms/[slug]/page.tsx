@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Markdown from "@/components/Markdown";
 import SiteNav from "@/components/SiteNav";
-import GradientMesh from "@/components/GradientMesh";
 import LiveEmbed from "@/components/LiveEmbed";
 import { initialsFrom } from "@/lib/initials";
 
@@ -13,13 +12,12 @@ export default async function PlatformPage({ params }: { params: { slug: string 
   if (!platform || platform.status !== "PUBLISHED") notFound();
 
   return (
-    <div className="bg-slate-950">
+    <div className="bg-stone-50">
       <SiteNav />
 
-      <header className="relative isolate overflow-hidden border-b border-white/10">
-        <GradientMesh className="opacity-70" />
-        <div className="mx-auto max-w-3xl px-6 py-20">
-          <Link href="/" className="text-sm font-medium text-slate-400 transition hover:text-white">
+      <header className="border-b border-neutral-200">
+        <div className="mx-auto max-w-3xl px-6 py-16">
+          <Link href="/" className="text-sm font-medium text-neutral-500 transition hover:text-neutral-900">
             ← Back to showcase
           </Link>
 
@@ -30,27 +28,27 @@ export default async function PlatformPage({ params }: { params: { slug: string 
                 alt={platform.name}
                 width={72}
                 height={72}
-                className="h-[72px] w-[72px] rounded-2xl border border-white/10 object-cover"
+                className="h-[72px] w-[72px] rounded-2xl border border-neutral-200 object-cover"
               />
             ) : (
-              <span className="flex h-[72px] w-[72px] items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-2xl font-bold tracking-wide text-cyan-200 backdrop-blur-sm">
+              <span className="flex h-[72px] w-[72px] items-center justify-center rounded-2xl bg-neutral-900 text-2xl font-bold tracking-wide text-white">
                 {initialsFrom(platform.name)}
               </span>
             )}
             <div>
-              <h1 className="text-4xl font-bold tracking-tight text-white">{platform.name}</h1>
-              {platform.tagline && <p className="mt-1.5 text-slate-400">{platform.tagline}</p>}
+              <h1 className="text-4xl font-semibold tracking-tight text-neutral-900">{platform.name}</h1>
+              {platform.tagline && <p className="mt-1.5 text-neutral-500">{platform.tagline}</p>}
             </div>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-2">
             {platform.category && (
-              <span className="rounded-full border border-cyan-300/20 bg-cyan-400/[0.08] px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-cyan-200/90">
+              <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-neutral-500">
                 {platform.category}
               </span>
             )}
             {platform.techStack.map((tech) => (
-              <span key={tech} className="rounded-md bg-white/[0.06] px-2 py-0.5 text-xs text-slate-400">
+              <span key={tech} className="rounded-md bg-neutral-100 px-2 py-0.5 text-xs text-neutral-500">
                 {tech}
               </span>
             ))}
@@ -63,7 +61,7 @@ export default async function PlatformPage({ params }: { params: { slug: string 
                   href={platform.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-200"
+                  className="rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-700"
                 >
                   Launch demo ↗
                 </a>
@@ -73,7 +71,7 @@ export default async function PlatformPage({ params }: { params: { slug: string 
                   href={platform.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/30"
+                  className="rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-neutral-900 transition hover:border-neutral-400 hover:bg-white"
                 >
                   View repo
                 </a>
@@ -84,8 +82,8 @@ export default async function PlatformPage({ params }: { params: { slug: string 
           {platform.highlights.length > 0 && (
             <ul className="mt-10 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {platform.highlights.map((h) => (
-                <li key={h} className="flex gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-300">
-                  <span className="text-cyan-300">✓</span>
+                <li key={h} className="flex gap-2.5 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-700">
+                  <span className="text-neutral-400">✓</span>
                   {h}
                 </li>
               ))}
@@ -96,13 +94,13 @@ export default async function PlatformPage({ params }: { params: { slug: string 
 
       {platform.liveUrl && platform.embeddable && (
         <div className="mx-auto max-w-4xl px-6 py-16">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300/80">Try it yourself</p>
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400">Try it yourself</p>
           <LiveEmbed url={platform.liveUrl} />
         </div>
       )}
 
       <div className="mx-auto max-w-3xl px-6 py-16">
-        <Markdown content={platform.whitepaper} dark />
+        <Markdown content={platform.whitepaper} />
       </div>
     </div>
   );

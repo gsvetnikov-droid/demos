@@ -14,18 +14,20 @@ export default function LiveEmbed({ url }: { url: string }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-2xl shadow-black/40">
-      <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="ml-2 truncate rounded-md bg-white/[0.05] px-3 py-1 text-xs text-slate-400">{host}</span>
+    <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm">
+      <div className="flex items-center gap-2 border-b border-neutral-200 bg-neutral-50 px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+        <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+        <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+        <span className="ml-2 truncate rounded-md border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-500">
+          {host}
+        </span>
       </div>
       <iframe
         src={url}
         title="Live platform preview"
         loading="lazy"
-        className="h-[520px] w-full bg-slate-900"
+        className="h-[520px] w-full bg-white"
         sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
       />
     </div>

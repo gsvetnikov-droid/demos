@@ -33,22 +33,15 @@ const config: Config = {
       },
       boxShadow: {
         card: "0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06)",
-        glow: "0 0 0 1px rgb(255 255 255 / 0.08), 0 8px 30px -8px rgb(34 211 238 / 0.25)",
       },
       keyframes: {
         "fade-in-up": {
           "0%": { opacity: "0", transform: "translateY(14px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        blob: {
-          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
-          "33%": { transform: "translate(4%, -6%) scale(1.08)" },
-          "66%": { transform: "translate(-3%, 4%) scale(0.96)" },
-        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
-        blob: "blob 18s ease-in-out infinite",
       },
     },
   },
