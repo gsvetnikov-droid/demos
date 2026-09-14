@@ -1,6 +1,8 @@
-import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import PlatformCard from "@/components/PlatformCard";
+import SiteNav from "@/components/SiteNav";
+import GradientMesh from "@/components/GradientMesh";
+import { SITE_TAGLINE } from "@/lib/site";
 
 export default async function HomePage() {
   const platforms = await prisma.platform.findMany({
@@ -9,38 +11,65 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-16">
-      <header className="mb-12 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Showcase</h1>
-          <p className="mt-2 max-w-xl text-slate-500">
-            A gallery of platforms I&apos;ve built. Each one has a full written case study — what it does, how
-            it&apos;s built, and why it&apos;s built that way.
-          </p>
-        </div>
-        <Link
-          href="/admin"
-          className="shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-500 hover:border-slate-300 hover:bg-slate-50"
-        >
-          Admin
-        </Link>
-      </header>
+    <div className="bg-slate-950">
+      <SiteNav />
 
-      {platforms.length === 0 ? (
-        <p className="rounded-lg border border-dashed border-slate-300 p-10 text-center text-slate-400">
-          Nothing published yet — add a platform from{" "}
-          <Link href="/admin" className="underline">
-            /admin
-          </Link>
-          .
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {platforms.map((platform) => (
-            <PlatformCard key={platform.id} platform={platform} />
-          ))}
+      <section className="relative isolate overflow-hidden">
+        <GradientMesh />
+        <div className="mx-auto max-w-4xl px-6 py-28 text-center sm:py-36">
+          <p className="animate-fade-in-up text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400">
+            Selected work
+          </p>
+          <h1 className="animate-fade-in-up mt-5 text-balance text-5xl font-bold tracking-tight text-white [animation-delay:0.1s] sm:text-6xl">
+            Platforms, built end to end.
+          </h1>
+          <p className="animate-fade-in-up mx-auto mt-6 max-w-xl text-balance text-lg text-slate-400 [animation-delay:0.2s]">
+            {SITE_TAGLINE}
+          </p>
+          <div className="animate-fade-in-up mt-10 [animation-delay:0.3s]">
+            <a
+              href="#platforms"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-200"
+            >
+              View the work
+              <span aria-hidden>↓</span>
+            </a>
+          </div>
         </div>
-      )}
+      </section>
+
+      <section id="platforms" className="mx-auto max-w-6xl px-6 pb-28">
+        {platforms.length === 0 ? (
+          <p className="rounded-2xl border border-dashed border-white/10 p-14 text-center text-slate-500">
+            Nothing published yet — add a platform from{" "}
+            <a href="/admin" className="text-indigo-400 underline underline-offset-4">
+              /admin
+            </a>
+            .
+          </p>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-6">
+            {platforms.map((platform, i) => (
+              <div
+                key={platform.id}
+                className="animate-fade-in-up w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
+                style={{ animationDelay: `${Math.min(i, 6) * 0.08}s` }}
+              >
+                <PlatformCard platform={platform} />
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <footer className="border-t border-white/10 py-8">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 text-xs text-slate-500">
+          <span>© {new Date().getFullYear()}</span>
+          <a href="/admin" className="hover:text-slate-300">
+            Admin
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
