@@ -1,29 +1,27 @@
 ## The problem
 
-A business development function at a BPO services company found new outsourcing prospects by watching job boards by hand — a rep scanning postings, guessing whether a hiring pattern signaled outsourcing potential, and logging whatever they remembered to in a spreadsheet. No scoring, no pipeline, no way to tell at a glance which of fifty flagged companies that week were actually worth a call.
+Finding outsourcing prospects the manual way means scanning job boards by eye, guessing whether a hiring pattern actually signals outsourcing intent, and logging whatever gets remembered into a spreadsheet. There's no scoring, no pipeline, and no way to tell at a glance which of fifty flagged companies this week are actually worth a call — by the time a rep works through the list, the hiring signal that made a company worth calling is already a week old.
 
 ## What it is
 
-A single-user sourcing tool that replaces the manual scan with an automated intelligence layer:
+A lead-sourcing platform that turns live hiring activity into a scored, prioritized outreach list, run as one loop: **find** the hiring signals that matter, **understand** why a company is a fit and why now, **contact** the right person with the right angle, **engage** with a message that lands, **close** the conversation into a partnership.
 
-- **Signal detection** — ingests job posting data and flags hiring patterns that indicate outsourcing opportunity: a sudden spike in a support or ops function, roles shaped like a vendor backfill, and similar patterns a rep would otherwise have to notice by eye.
-- **Fit scoring** — scores each flagged company against BPO-services fit criteria, so the output is a ranked list, not a raw feed.
-- **Prospect pipeline** — carries scored companies into a pipeline with stage, status, and follow-up tracking, so a flagged company gets worked instead of sitting unread.
+The intelligence layer scores every company it tracks across six dimensions: hiring volume and velocity, role mix and seniority depth, work model and coverage needs, bilingual and specialized role demand, repost and growth patterns, and overall fit for outsourced support. Each company comes out the other side with an opportunity score from 0–100, a priority tier (High / Good Fit / Review), a recommended next step, a plain-language "why now" rationale, and its open role count and locations.
 
-The tool has no auth system, no user roles, and no multi-tenant data model. It's built for exactly one person's daily sourcing routine, and every part of the build reflects that.
+The dashboard runs as a live sourcing queue rather than a static report: companies tracked, new companies found this week, follow-ups due, and a ranked top-20 list of the best opportunities currently open, so a rep opens the tool already knowing where to start the day.
 
 ## Architecture
 
-**Stack:** Next.js 15, Neon Postgres (serverless) via Prisma, deployed to Vercel. Make.com handles ingestion into the pipeline; the Claude API does the actual signal classification and scoring.
-
-Two build problems came up on this stack. Prisma's client needed a specific adapter configuration to run correctly inside Next.js Edge functions against Neon's connection model, which behaves differently from a persistent server connection. Separately, a Next.js 15 version bump changed how middleware matchers resolve, which broke route protection until the middleware config was reworked.
+**Stack:** Next.js on Neon Postgres, deployed to Vercel. Job data comes in from a set of free public APIs — Remotive, Arbeitnow, RemoteOK, and Jobicy — supplemented by direct reads against Greenhouse, Lever, and Ashby, the three ATS platforms that make up most of the postings actually worth scoring. A signal-aware outreach generator sits on top of the scoring layer, and a full sales pipeline tracker carries a scored company from first flag through to a closed conversation.
 
 ## A few decisions worth calling out
 
-**Single-user by design.** Multi-tenant auth, roles, and team-scoped visibility are real engineering work with no payoff for a tool one person uses every morning. Skipping all of it kept the build focused on what actually mattered: signal quality and pipeline speed.
+**Free data sources instead of a paid job-data API.** Remotive, Arbeitnow, RemoteOK, and Jobicy each expose enough listing data on their own free tiers to build a usable signal feed, and reading ATS platforms directly covers the postings those aggregators miss. Together they replace what would otherwise be a recurring data-vendor bill.
 
-**Claude API for scoring, not a keyword engine.** Deciding whether a hiring pattern actually indicates outsourcing intent — versus ordinary headcount growth — is closer to judgment than a rule can capture. The scoring step calls the Claude API on each posting rather than trying to hand-write every rule that would matter.
+**Scoring six dimensions instead of one.** A single "is this company hiring a lot" signal produces false positives constantly — ordinary headcount growth looks identical to outsourcing intent on that axis alone. Scoring role mix, seniority depth, work model, and repost patterns alongside raw volume is what turns a noisy hiring feed into a short list actually worth calling.
+
+**A ranked top-20, not a raw feed.** Two hundred and forty-eight tracked companies is not a list anyone works from directly. Surfacing five high-priority, ready-to-contact opportunities alongside the full count is what makes the tool usable in the first five minutes of a day, not just accurate in aggregate.
 
 ## Result
 
-A live, solo-maintained tool covering the full loop from raw job posting to a scored, pipeline-ready prospect, with no manual spreadsheet step anywhere in between.
+A live sourcing tool that replaces a manual job-board scan with a scored, ranked, pipeline-ready prospect list — turning hiring activity into prioritized outreach before the company knows it needs the call.

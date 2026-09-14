@@ -8,12 +8,16 @@ function readWhitepaper(filename: string): string {
   return fs.readFileSync(path.join(__dirname, "seed-content", filename), "utf-8");
 }
 
-// One row per showcased project. `liveUrl`/`coverImageUrl` are blank on
-// purpose for every entry below except when noted — they're filled in
-// (and the row flipped to PUBLISHED) from /admin once real screenshots
-// exist for that platform. All rows seed as DRAFT so nothing shows on the
-// public site until it's ready.
-const platforms: Array<Parameters<typeof prisma.platform.upsert>[0]["create"]> = [
+type PlatformSeed = Parameters<typeof prisma.platform.upsert>[0]["create"];
+
+// One row per showcased project. liveUrl/coverImageUrl/status/sortOrder are
+// "admin-managed" — once a row exists, those four are left alone by every
+// later seed run (see main() below), so publishing a platform or setting
+// its cover image from /admin never gets clobbered by a redeploy. Every
+// other field (copy, tags, tech stack, the whitepaper body) re-syncs from
+// this file on every deploy, so fixing a typo here is enough — no need to
+// hand-edit the live row too.
+const platforms: PlatformSeed[] = [
   {
     slug: "demo-crm",
     name: "Demo CRM",
@@ -40,18 +44,19 @@ const platforms: Array<Parameters<typeof prisma.platform.upsert>[0]["create"]> =
   },
   {
     slug: "hiring-signal-intelligence",
-    name: "Hiring Signal Intelligence Tool",
-    tagline: "Turns job-posting patterns into a scored, pipeline-ready outsourcing prospect list",
+    name: "Hiring Signal Intelligence Platform",
+    tagline: "Turns live hiring activity into a scored, ranked, pipeline-ready prospect list",
     summary:
-      "A single-user sourcing tool for a BPO business development function: detects hiring signals that indicate outsourcing opportunity, scores each company for fit, and runs a prospect pipeline on top — no manual spreadsheet step anywhere in the loop.",
+      "A lead-sourcing platform that scores every company it tracks across six hiring-signal dimensions, then runs a full find-to-close pipeline on top — tracking 248+ companies with a ranked top-20 of the best opportunities open right now.",
     category: "Sales intelligence",
-    tags: ["Sales intelligence", "AI scoring", "Sourcing", "Internal tool"],
-    techStack: ["Next.js", "Neon Postgres", "Prisma", "Vercel", "Make.com", "Claude API"],
+    tags: ["Sales intelligence", "Lead sourcing", "Sales pipeline"],
+    techStack: ["Next.js", "Neon Postgres", "Vercel", "Greenhouse / Lever / Ashby ATS data"],
     highlights: [
-      "Detects hiring-pattern signals from raw job posting data",
-      "Claude API scores each company against BPO-services fit",
-      "Prospect pipeline with stage, status, and follow-up tracking",
-      "Single-user by design — no auth, roles, or multi-tenant overhead",
+      "0-100 opportunity scoring across 6 hiring-signal dimensions",
+      "Live dashboard: companies tracked, new this week, follow-ups due",
+      "Ranked top-20 best-opportunity list, not a raw feed",
+      "Signal-aware outreach generator + full sales pipeline tracker",
+      "Built entirely on free job-data APIs and direct ATS reads",
     ],
     liveUrl: "",
     repoUrl: "",
@@ -149,17 +154,63 @@ const platforms: Array<Parameters<typeof prisma.platform.upsert>[0]["create"]> =
     status: "DRAFT",
     sortOrder: 6,
   },
+  {
+    slug: "discovery-call-prep",
+    name: "Discovery Call Prep Tool",
+    tagline: "A full discovery-call package generated from one form, in under 30 seconds",
+    summary:
+      "An internal sales enablement tool: submit a company name and get a fit score with rationale, company context, 10-12 categorized discovery questions, and a client-side PDF export — replacing 30-60 minutes of manual prep, at zero AI cost.",
+    category: "Sales enablement",
+    tags: ["Sales enablement", "AI", "Internal tool"],
+    techStack: ["Next.js 15", "TypeScript", "Tailwind CSS", "Groq (Llama 3.3 70B)", "jsPDF"],
+    highlights: [
+      "Fit score (1-100) with written rationale, not just a number",
+      "10-12 discovery questions grouped by category with stated purpose",
+      "Client-side PDF export — no server, no upload required",
+      "Runs on Groq's free tier — zero ongoing AI cost",
+      "Full package generated in under 30 seconds",
+    ],
+    liveUrl: "",
+    repoUrl: "",
+    coverImageUrl: "",
+    whitepaper: readWhitepaper("discovery-call-prep-whitepaper.md"),
+    status: "DRAFT",
+    sortOrder: 7,
+  },
+  {
+    slug: "confintel",
+    name: "ConfIntel",
+    tagline: "Free, public research platform for conferences, trade shows, and expos worldwide",
+    summary:
+      "No signup, no login — search any conference or trade show and get an ROI calculator, SWOT analysis, AI-personalized recommendations, a budget planner, networking prep, and CFP deadline tracking. Covers 16+ industries and 1,000+ events.",
+    category: "Public research tool",
+    tags: ["Public tool", "AI", "Research", "Events"],
+    techStack: ["AI-assisted research and generation"],
+    highlights: [
+      "No signup, no login — instant public access",
+      "16+ industries, 100+ sub-domains, 1,000+ events tracked",
+      "ROI calculator and SWOT analysis per event",
+      "AI networking prep and CFP deadline tracking",
+      "Built and run solo, at zero ongoing infrastructure cost",
+    ],
+    liveUrl: "",
+    repoUrl: "",
+    coverImageUrl: "",
+    whitepaper: readWhitepaper("confintel-whitepaper.md"),
+    status: "DRAFT",
+    sortOrder: 8,
+  },
 ];
 
 async function main() {
-  for (const platform of platforms) {
+  for (const { liveUrl, coverImageUrl, status, sortOrder, ...content } of platforms) {
     await prisma.platform.upsert({
-      where: { slug: platform.slug },
-      update: {},
-      create: platform,
+      where: { slug: content.slug },
+      update: content,
+      create: { ...content, liveUrl, coverImageUrl, status, sortOrder },
     });
   }
-  console.log(`Seeded ${platforms.length} platforms (all DRAFT — publish each from /admin once it's ready to show).`);
+  console.log(`Synced ${platforms.length} platforms (content re-synced every run; liveUrl/coverImageUrl/status/sortOrder are admin-managed and left alone once set).`);
 }
 
 main()
